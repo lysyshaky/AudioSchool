@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+const darkBG = Color.fromRGBO(24, 26, 26, 1);
+
+const lightBG = Color.fromRGBO(248, 248, 248, 1);
 ThemeData appThemeData() {
   return ThemeData(
     progressIndicatorTheme:

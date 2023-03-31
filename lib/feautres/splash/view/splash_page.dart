@@ -1,3 +1,4 @@
+import 'package:audio_school/feautres/theme/theme_data.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -10,14 +11,20 @@ class SplashPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.light;
     final size = MediaQuery.of(context).size;
     return Scaffold(
+      backgroundColor: isDark ? darkBG : lightBG,
       body: Center(
-        child: Text(
-          'eComerce',
-          style: GoogleFonts.playfairDisplay().copyWith(
-              fontSize: size.width * 0.14, fontWeight: FontWeight.bold),
-        ),
+        child: isDark
+            ? const Image(
+                image: AssetImage(
+                    '/Users/yuralysyshak/Documents/audio_school/assets/logo-dark.png'),
+              )
+            : const Image(
+                image: AssetImage(
+                    '/Users/yuralysyshak/Documents/audio_school/assets/logo.png'),
+              ),
       ),
     );
   }
