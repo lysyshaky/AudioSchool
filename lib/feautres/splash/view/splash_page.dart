@@ -11,12 +11,12 @@ class SplashPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.light;
+    final isThemeDark = isDark(context);
     final size = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: isDark ? darkBG : lightBG,
+      backgroundColor: isThemeDark ? darkBG : lightBG,
       body: Center(
-        child: isDark
+        child: isThemeDark
             ? const Image(
                 image: AssetImage(
                     '/Users/yuralysyshak/Documents/audio_school/assets/logo-dark.png'),
