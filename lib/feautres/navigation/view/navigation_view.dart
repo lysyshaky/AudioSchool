@@ -35,36 +35,46 @@ class _NavPageState extends State<NavPage> {
     return Scaffold(
       backgroundColor: isThemeDark ? darkBG : lightBG,
       body: _children[_currentIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        // fixedColor: isThemeDark ? darkBG : lightBG,
-        onTap: onTabTapped,
-        currentIndex: _currentIndex,
-        selectedItemColor: isThemeDark ? yellowMain : blueMain,
-        unselectedItemColor: isThemeDark ? greyNavDark : greyNavLight,
-        items: [
-          BottomNavigationBarItem(
-            backgroundColor: isThemeDark ? darkBG : lightBG,
-            icon: Icon(
-              Icons.home,
+      bottomNavigationBar: Container(
+        decoration: BoxDecoration(
+          border: Border(
+            top: BorderSide(
+              color: Colors.grey,
+              width: 0.2,
             ),
-            label: 'Home',
           ),
-          BottomNavigationBarItem(
-            backgroundColor: isThemeDark ? darkBG : lightBG,
-            icon: Icon(Icons.search),
-            label: 'Search',
-          ),
-          BottomNavigationBarItem(
-            backgroundColor: isThemeDark ? darkBG : lightBG,
-            icon: Icon(Icons.library_books),
-            label: 'Library',
-          ),
-          BottomNavigationBarItem(
-            backgroundColor: isThemeDark ? darkBG : lightBG,
-            icon: Icon(Icons.person),
-            label: 'Profile',
-          ),
-        ],
+        ),
+        child: BottomNavigationBar(
+          // fixedColor: isThemeDark ? darkBG : lightBG,
+          onTap: onTabTapped,
+          currentIndex: _currentIndex,
+          selectedItemColor: isThemeDark ? yellowMain : blueMain,
+          unselectedItemColor: isThemeDark ? greyNavDark : greyNavLight,
+          items: [
+            BottomNavigationBarItem(
+              backgroundColor: isThemeDark ? darkBG : lightBG,
+              icon: Icon(
+                Icons.home,
+              ),
+              label: 'Home',
+            ),
+            BottomNavigationBarItem(
+              backgroundColor: isThemeDark ? darkBG : lightBG,
+              icon: Icon(Icons.search),
+              label: 'Search',
+            ),
+            BottomNavigationBarItem(
+              backgroundColor: isThemeDark ? darkBG : lightBG,
+              icon: Icon(Icons.library_books),
+              label: 'Library',
+            ),
+            BottomNavigationBarItem(
+              backgroundColor: isThemeDark ? darkBG : lightBG,
+              icon: Icon(Icons.person),
+              label: 'Profile',
+            ),
+          ],
+        ),
       ),
     );
   }
