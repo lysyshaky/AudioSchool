@@ -14,6 +14,7 @@ const greyMain = Color.fromRGBO(49, 51, 51, 1);
 const greyText = Color.fromRGBO(196, 204, 204, 1);
 const greyNavLight = Color.fromRGBO(156, 156, 156, 1);
 const greyNavDark = Color.fromRGBO(196, 204, 204, 1);
+const greySearch = Color.fromRGBO(147, 153, 153, 1);
 
 ThemeData appThemeData() {
   return ThemeData(

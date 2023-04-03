@@ -18,7 +18,7 @@ class _NavPageState extends State<NavPage> {
 
   final List<Widget> _children = [
     HomePage(),
-    SearchScreen(),
+    SearchPage(),
     LibraryScreen(),
     ProfileScreen(),
   ];
@@ -56,22 +56,22 @@ class _NavPageState extends State<NavPage> {
               icon: Icon(
                 Icons.home,
               ),
-              label: 'Home',
+              label: 'Головна',
             ),
             BottomNavigationBarItem(
               backgroundColor: isThemeDark ? darkBG : lightBG,
               icon: Icon(Icons.search),
-              label: 'Search',
+              label: 'Пошук',
             ),
             BottomNavigationBarItem(
               backgroundColor: isThemeDark ? darkBG : lightBG,
               icon: Icon(Icons.library_books),
-              label: 'Library',
+              label: 'Бібліотека',
             ),
             BottomNavigationBarItem(
               backgroundColor: isThemeDark ? darkBG : lightBG,
               icon: Icon(Icons.person),
-              label: 'Profile',
+              label: 'Профіль',
             ),
           ],
         ),
