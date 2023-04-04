@@ -89,7 +89,7 @@ class BookList extends StatelessWidget {
           ),
         ),
         SizedBox(
-          height: 300.0,
+          height: 280.0,
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
             itemCount: books.length,
@@ -202,7 +202,7 @@ class BookList extends StatelessWidget {
           ),
         ),
         SizedBox(
-          height: 300.0,
+          height: 280.0,
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
             itemCount: books.length,
@@ -315,7 +315,7 @@ class BookList extends StatelessWidget {
           ),
         ),
         SizedBox(
-          height: 300.0,
+          height: 280.0,
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
             itemCount: books.length,
@@ -428,7 +428,7 @@ class BookList extends StatelessWidget {
           ),
         ),
         SizedBox(
-          height: 300.0,
+          height: 280.0,
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
             itemCount: books.length,

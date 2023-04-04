@@ -19,7 +19,7 @@ class _NavPageState extends State<NavPage> {
   final List<Widget> _children = [
     HomePage(),
     SearchPage(),
-    LibraryScreen(),
+    LibraryPage(),
     ProfileScreen(),
   ];
 

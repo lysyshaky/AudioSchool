@@ -1,29 +1,27 @@
 import 'package:audio_school/feautres/theme/theme_data.dart';
 import 'package:flutter/material.dart';
 
-class ClassButton extends StatefulWidget {
-  const ClassButton({super.key});
+class LibraryButton extends StatefulWidget {
+  const LibraryButton({super.key});
 
   @override
-  _ClassButtonState createState() => _ClassButtonState();
+  _LibraryButtonState createState() => _LibraryButtonState();
 }
 
-class _ClassButtonState extends State<ClassButton> {
+class _LibraryButtonState extends State<LibraryButton> {
   int _selectedIndex = 0;
 
   final List<String> _classList = [
-    'Клас 1',
-    'Клас 2',
-    'Клас 3',
-    'Клас 4',
-    'Клас 5',
-    'Клас 6',
-    'Клас 7',
-    'Клас 8',
-    'Клас 9',
-    'Клас 10',
-    'Клас 11',
-    'Клас 12',
+    'Збережені книги',
+    'В процесі',
+    'Завершені',
+  ];
+
+  final List<IconData> _classIcons = [
+    Icons.bookmark_border_rounded,
+    // Icons.bookmark,
+    Icons.timer_outlined,
+    Icons.check_circle_outline,
   ];
 
   @override
@@ -71,7 +69,8 @@ class _ClassButtonState extends State<ClassButton> {
                 child: Row(
                   children: [
                     Icon(
-                      Icons.school_outlined,
+                      _classIcons[
+                          index], // use the icon at the same index as the text
                       color: isThemeDark
                           ? _selectedIndex == index
                               ? blueMain
@@ -93,7 +92,6 @@ class _ClassButtonState extends State<ClassButton> {
                                 : blueMainDark,
                         fontWeight: FontWeight.bold,
                         fontSize: 18.0,
-                        //fontSize: 16.0,
                       ),
                     ),
                   ],

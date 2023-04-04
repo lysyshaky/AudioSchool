@@ -10,8 +10,8 @@ class LogoTitle extends StatelessWidget {
     final isThemeDark = isDark(context);
     return Container(
       alignment: Alignment.centerLeft,
-      width: 150,
-      height: 150,
+      width: 180,
+      height: 180,
       child: isThemeDark
           ? const Image(
               image: AssetImage(
