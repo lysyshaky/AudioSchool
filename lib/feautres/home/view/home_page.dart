@@ -21,6 +21,7 @@ class HomePage extends StatelessWidget {
       backgroundColor: isThemeDark ? darkBG : lightBG,
       appBar: AppBar(
         backgroundColor: isThemeDark ? darkBG : lightBG,
+        iconTheme: IconThemeData(color: isThemeDark ? lightBG : blueMainDark),
         elevation: 0.0,
         centerTitle: false,
         title: const LogoTitle(),

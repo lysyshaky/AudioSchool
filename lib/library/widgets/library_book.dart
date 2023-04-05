@@ -140,7 +140,7 @@
 import 'package:audio_school/feautres/theme/theme_data.dart';
 import 'package:flutter/material.dart';
 
-class LibraryScreen extends StatelessWidget {
+class LibraryPage extends StatelessWidget {
   final List<Map<String, String>> books = [
     {
       'image': '/Users/yuralysyshak/Documents/audio_school/assets/test.png',

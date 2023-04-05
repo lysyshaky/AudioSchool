@@ -20,7 +20,7 @@ class _NavPageState extends State<NavPage> {
     HomePage(),
     SearchPage(),
     LibraryPage(),
-    ProfileScreen(),
+    ProfilePage(),
   ];
 
   void onTabTapped(int index) {

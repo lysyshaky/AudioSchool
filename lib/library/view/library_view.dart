@@ -17,7 +17,7 @@ class LibraryView extends StatelessWidget {
           SizedBox(
             height: 10,
           ),
-          LibraryScreen(),
+          LibraryPage(),
         ],
       ),
     );
