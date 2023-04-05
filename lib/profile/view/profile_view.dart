@@ -5,7 +5,7 @@ import 'package:audio_school/library/widgets/library_book.dart';
 import 'package:audio_school/library/widgets/library_button.dart';
 import 'package:flutter/material.dart';
 
-import '../widgets/profile_options.dart';
+import '../widgets/profile_tabs.dart';
 import '../widgets/user_status.dart';
 
 class ProfileView extends StatelessWidget {
@@ -28,7 +28,7 @@ class ProfileView extends StatelessWidget {
               color: isThemeDark ? greyMain : greyNavDark,
             ),
           ),
-          NavigationTabs(),
+          ProfileTabs(),
         ],
       ),
     );

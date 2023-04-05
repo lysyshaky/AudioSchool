@@ -4,13 +4,13 @@ import 'package:flutter/material.dart';
 
 import '../../feautres/theme/theme_data.dart';
 
-class NavigationTabs extends StatefulWidget {
-  const NavigationTabs({super.key});
+class ProfileTabs extends StatefulWidget {
+  const ProfileTabs({super.key});
   @override
-  _NavigationTabsState createState() => _NavigationTabsState();
+  _ProfileTabsState createState() => _ProfileTabsState();
 }
 
-class _NavigationTabsState extends State<NavigationTabs> {
+class _ProfileTabsState extends State<ProfileTabs> {
   int _selectedIndex = 0;
   bool _switchValue = false;
 

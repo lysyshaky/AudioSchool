@@ -58,10 +58,10 @@ class _ClassButtonState extends State<ClassButton> {
                 border: Border.all(
                   color: isThemeDark
                       ? _selectedIndex == index
-                          ? darkBG
+                          ? yellowMain
                           : greyMain
                       : _selectedIndex == index
-                          ? lightBG
+                          ? blueMain
                           : blueMainDark,
                   width: 2.0,
                 ),
