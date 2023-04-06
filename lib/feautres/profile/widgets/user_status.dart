@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../feautres/theme/theme.dart';
+import '../../theme/theme.dart';
 
 class UserStatus extends StatelessWidget {
   final String userName;

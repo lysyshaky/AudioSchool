@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 
-import '../../feautres/theme/theme_data.dart';
+import '../../theme/theme_data.dart';
 
 class SearchText extends StatelessWidget {
   const SearchText({super.key});

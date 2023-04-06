@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../../../library/library.dart';
-import '../../../profile/profile.dart';
-import '../../../search/search.dart';
+import '../../library/library.dart';
+import '../../profile/profile.dart';
+import '../../search/search.dart';
 import '../../home/view/home_page.dart';
 import '../../theme/theme_data.dart';
 

@@ -1,8 +1,8 @@
 import 'package:audio_school/feautres/home/home.dart';
-import 'package:audio_school/library/widgets/library_book.dart';
+import 'package:audio_school/feautres/library/widgets/library_book.dart';
 import 'package:flutter/material.dart';
 
-import '../../feautres/theme/theme_data.dart';
+import '../../theme/theme_data.dart';
 
 class ProfileTabs extends StatefulWidget {
   const ProfileTabs({super.key});

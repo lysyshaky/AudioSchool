@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 
-import '../../feautres/theme/theme_data.dart';
+import '../../theme/theme_data.dart';
 
-class LibraryText extends StatelessWidget {
-  const LibraryText({super.key});
+class ProfileText extends StatelessWidget {
+  const ProfileText({super.key});
 
   @override
   Widget build(BuildContext context) {
     final bool isThemeDark = isDark(context);
     return Text(
-      'Бібліотека',
+      'Профіль',
       textAlign: TextAlign.start,
       style: TextStyle(
         fontWeight: FontWeight.bold,

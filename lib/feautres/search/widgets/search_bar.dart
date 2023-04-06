@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../feautres/theme/theme_data.dart';
+import '../../theme/theme_data.dart';
 
 class SearchBar extends StatelessWidget {
   @override

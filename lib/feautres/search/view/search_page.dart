@@ -1,4 +1,4 @@
-import 'package:audio_school/search/search.dart';
+import 'package:audio_school/feautres/search/search.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
