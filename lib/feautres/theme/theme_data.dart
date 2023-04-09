@@ -16,22 +16,3 @@ const greyNavLight = Color.fromRGBO(156, 156, 156, 1);
 const greyNavDark = Color.fromRGBO(196, 204, 204, 1);
 const greySearch = Color.fromRGBO(147, 153, 153, 1);
 const greyLight = Color.fromRGBO(234, 244, 244, 1);
-ThemeData appThemeData() {
-  return ThemeData(
-    progressIndicatorTheme:
-        ProgressIndicatorThemeData(color: Color.fromARGB(255, 31, 108, 114)),
-    inputDecorationTheme: InputDecorationTheme(
-      floatingLabelStyle:
-          const TextStyle(color: Color.fromARGB(255, 31, 108, 114)),
-      focusedBorder: const UnderlineInputBorder(
-        borderSide: BorderSide(
-          width: 2,
-          color: Color.fromARGB(255, 31, 108, 114),
-        ),
-      ),
-      hintStyle: TextStyle(
-        color: Colors.grey.shade500,
-      ),
-    ),
-  );
-}

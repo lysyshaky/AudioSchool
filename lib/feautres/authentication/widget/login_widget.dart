@@ -49,9 +49,15 @@ class LoginWidget extends StatelessWidget {
                     child: Column(
                       children: [
                         TextField(
+                          cursorColor: isThemeDark ? yellowMain : blueMain,
                           decoration: InputDecoration(
                             hintText: 'Е-мейл',
                             border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: isThemeDark ? yellowMain : blueMain),
                               borderRadius: BorderRadius.circular(8),
                             ),
                             filled: true,
@@ -60,9 +66,15 @@ class LoginWidget extends StatelessWidget {
                         ),
                         SizedBox(height: 16),
                         TextField(
+                          cursorColor: isThemeDark ? yellowMain : blueMain,
                           decoration: InputDecoration(
                             hintText: 'Пароль',
                             border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: isThemeDark ? yellowMain : blueMain),
                               borderRadius: BorderRadius.circular(8),
                             ),
                             filled: true,
@@ -79,7 +91,7 @@ class LoginWidget extends StatelessWidget {
                     child: ElevatedButton(
                       onPressed: () {},
                       child: Text(
-                        'Продовжити',
+                        'Увійти',
                         style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
@@ -88,6 +100,9 @@ class LoginWidget extends StatelessWidget {
                       style: ElevatedButton.styleFrom(
                         backgroundColor: isThemeDark ? yellowMain : blueMain,
                         minimumSize: Size(326, 48),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
                       ),
                     ),
                   ),
@@ -149,6 +164,9 @@ class LoginWidget extends StatelessWidget {
                           style: ElevatedButton.styleFrom(
                             backgroundColor:
                                 isThemeDark ? greyLight : blueMainDark,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8),
+                            ),
                             minimumSize: Size(326, 48),
                           ),
                         ),
@@ -168,6 +186,9 @@ class LoginWidget extends StatelessWidget {
                                 color: isThemeDark ? darkBG : lightBG,
                               )),
                           style: ElevatedButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8),
+                            ),
                             backgroundColor:
                                 isThemeDark ? greyLight : blueMainDark,
                             minimumSize: Size(326, 48),
@@ -189,6 +210,9 @@ class LoginWidget extends StatelessWidget {
                                 color: isThemeDark ? darkBG : lightBG,
                               )),
                           style: ElevatedButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8),
+                            ),
                             backgroundColor:
                                 isThemeDark ? greyLight : blueMainDark,
                             minimumSize: Size(326, 48),

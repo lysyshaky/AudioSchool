@@ -1,6 +1,7 @@
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:audio_school/counter/counter.dart';
 import 'package:audio_school/feautres/authentication/view/login_page.dart';
+import 'package:audio_school/feautres/authentication/view/register_page.dart';
 import 'package:audio_school/feautres/home/home.dart';
 import 'package:audio_school/feautres/navigation/nav.dart';
 import 'package:audio_school/l10n/l10n.dart';
@@ -22,6 +23,9 @@ class App extends StatelessWidget {
         appBarTheme: const AppBarTheme(color: Color(0xFF13B9FF)),
         colorScheme: ColorScheme.fromSwatch(
           accentColor: const Color(0xFF13B9FF),
+        ),
+        textSelectionTheme: TextSelectionThemeData(
+          selectionColor: yellowMain,
         ),
       ),
       debugShowCheckedModeBanner: false,
