@@ -34,7 +34,7 @@ class App extends StatelessWidget {
       home: AnimatedSplashScreen(
         duration: 1000,
         splash: const SplashPage(),
-        nextScreen: NavPage(),
+        nextScreen: LoginPage(),
         splashTransition: SplashTransition.fadeTransition,
         backgroundColor: isThemeDark ? darkBG : lightBG,
       ),

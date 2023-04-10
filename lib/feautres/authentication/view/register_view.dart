@@ -1,4 +1,4 @@
-import 'package:audio_school/feautres/authentication/widget/register_view.dart';
+import 'package:audio_school/feautres/authentication/widget/register_widget.dart';
 import 'package:flutter/material.dart';
 
 class RegisterView extends StatelessWidget {

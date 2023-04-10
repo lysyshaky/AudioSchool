@@ -1,5 +1,9 @@
+import 'package:audio_school/feautres/authentication/view/view.dart';
+import 'package:audio_school/feautres/navigation/nav.dart';
 import 'package:audio_school/feautres/theme/theme_data.dart';
 import 'package:flutter/material.dart';
+
+import '../view/register_page.dart';
 
 class LoginWidget extends StatelessWidget {
   const LoginWidget({Key? key}) : super(key: key);
@@ -89,7 +93,14 @@ class LoginWidget extends StatelessWidget {
                     width: 326,
                     height: 48,
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const NavPage(),
+                          ),
+                        );
+                      },
                       child: Text(
                         'Увійти',
                         style: TextStyle(
@@ -110,7 +121,14 @@ class LoginWidget extends StatelessWidget {
                   Align(
                     alignment: Alignment.centerRight,
                     child: TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const ResetPasswordPage(),
+                          ),
+                        );
+                      },
                       child: Text(
                         'Забули пароль?',
                         style: TextStyle(
@@ -223,7 +241,14 @@ class LoginWidget extends StatelessWidget {
                   ),
                   SizedBox(height: 8),
                   TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const RegisterPage(),
+                        ),
+                      );
+                    },
                     child: RichText(
                       text: TextSpan(
                         text: 'Немає облікового запису? ',

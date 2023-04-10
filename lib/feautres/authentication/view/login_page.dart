@@ -13,17 +13,21 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bool isThemeDark = isDark(context);
-    return Scaffold(
-      // bottomNavigationBar: MyBottomNavigationBar(),
-      backgroundColor: isThemeDark ? darkBG : lightBG,
-      appBar: AppBar(
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: Scaffold(
+        // bottomNavigationBar: MyBottomNavigationBar(),
         backgroundColor: isThemeDark ? darkBG : lightBG,
-        iconTheme: IconThemeData(color: isThemeDark ? lightBG : blueMainDark),
-        elevation: 0.0,
-        centerTitle: false,
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          backgroundColor: isThemeDark ? darkBG : lightBG,
+          iconTheme: IconThemeData(color: isThemeDark ? lightBG : blueMainDark),
+          elevation: 0.0,
+          centerTitle: false,
+        ),
+        // drawer: AppDrawer(),
+        body: LoginView(),
       ),
-      // drawer: AppDrawer(),
-      body: LoginView(),
     );
   }
 }

@@ -1,5 +1,8 @@
+import 'package:audio_school/feautres/authentication/view/view.dart';
 import 'package:audio_school/feautres/theme/theme_data.dart';
 import 'package:flutter/material.dart';
+
+import '../../navigation/view/navigation_view.dart';
 
 class RegisterWidget extends StatefulWidget {
   const RegisterWidget({Key? key}) : super(key: key);
@@ -143,7 +146,14 @@ class _RegisterWidgetState extends State<RegisterWidget> {
                     width: 326,
                     height: 48,
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const NavPage(),
+                          ),
+                        );
+                      },
                       child: Text(
                         'Створити обліковий запис',
                         style: TextStyle(
@@ -204,7 +214,14 @@ class _RegisterWidgetState extends State<RegisterWidget> {
                   ),
                   SizedBox(height: 16),
                   TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const LoginPage(),
+                        ),
+                      );
+                    },
                     child: RichText(
                       text: TextSpan(
                         text: 'Вже є аккаунт? ',
