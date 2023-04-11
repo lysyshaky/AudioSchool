@@ -1,3 +1,4 @@
+import 'package:audio_school/feautres/authentication/view/login_page.dart';
 import 'package:audio_school/feautres/home/home.dart';
 import 'package:audio_school/feautres/library/widgets/library_book.dart';
 import 'package:flutter/material.dart';
@@ -71,6 +72,14 @@ class _ProfileTabsState extends State<ProfileTabs> {
                     builder: (context) => HomePage(),
                   ),
                 );
+                if (_tabs[i]['routeName'] as String == '/logout') {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => LoginPage(),
+                    ),
+                  );
+                }
               });
               // TODO: navigate to corresponding page
             },

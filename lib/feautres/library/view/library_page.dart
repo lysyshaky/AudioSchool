@@ -19,6 +19,7 @@ class LibraryPage extends StatelessWidget {
       backgroundColor: isThemeDark ? darkBG : lightBG,
 
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: isThemeDark ? darkBG : lightBG,
         elevation: 0.0,
         centerTitle: false,

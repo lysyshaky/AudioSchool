@@ -5,8 +5,20 @@ import 'package:flutter/material.dart';
 
 import '../view/register_page.dart';
 
-class LoginWidget extends StatelessWidget {
+class LoginWidget extends StatefulWidget {
   const LoginWidget({Key? key}) : super(key: key);
+
+  @override
+  State<LoginWidget> createState() => _LoginWidgetState();
+}
+
+class _LoginWidgetState extends State<LoginWidget> {
+  bool _obscureText = true;
+  @override
+  void initState() {
+    super.initState();
+    _obscureText = true;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -69,22 +81,46 @@ class LoginWidget extends StatelessWidget {
                           ),
                         ),
                         SizedBox(height: 16),
-                        TextField(
-                          cursorColor: isThemeDark ? yellowMain : blueMain,
-                          decoration: InputDecoration(
-                            hintText: 'Пароль',
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8),
+                        Theme(
+                          data: Theme.of(context)
+                              .copyWith(accentColor: yellowMain),
+                          child: TextFormField(
+                            cursorColor: isThemeDark ? yellowMain : blueMain,
+                            obscureText: _obscureText,
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return 'Будь ласка введіть пароль';
+                              }
+                              return null;
+                            },
+                            decoration: InputDecoration(
+                              hintText: 'Пароль',
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: isThemeDark ? yellowMain : blueMain),
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              filled: true,
+                              fillColor: Colors.white,
+                              suffixIcon: IconButton(
+                                icon: Icon(
+                                  _obscureText
+                                      ? Icons.visibility_off
+                                      : Icons.visibility,
+                                  color: isThemeDark ? yellowMain : blueMain,
+                                ),
+                                onPressed: () {
+                                  setState(() {
+                                    _obscureText = !_obscureText;
+                                  });
+                                },
+                              ),
                             ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: isThemeDark ? yellowMain : blueMain),
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            filled: true,
-                            fillColor: Colors.white,
                           ),
-                        ),
+                        )
                       ],
                     ),
                   ),

@@ -2,14 +2,14 @@ import 'package:audio_school/feautres/authentication/view/view.dart';
 import 'package:audio_school/feautres/theme/theme_data.dart';
 import 'package:flutter/material.dart';
 
-class ResetPasswordWidget extends StatefulWidget {
-  const ResetPasswordWidget({Key? key}) : super(key: key);
+class ResetCodeWidget extends StatefulWidget {
+  const ResetCodeWidget({Key? key}) : super(key: key);
 
   @override
-  State<ResetPasswordWidget> createState() => _ResetPasswordWidgetState();
+  State<ResetCodeWidget> createState() => _ResetCodeWidgetState();
 }
 
-class _ResetPasswordWidgetState extends State<ResetPasswordWidget> {
+class _ResetCodeWidgetState extends State<ResetCodeWidget> {
   bool _obscureText = true;
   @override
   void initState() {
@@ -40,7 +40,7 @@ class _ResetPasswordWidgetState extends State<ResetPasswordWidget> {
           ),
           SizedBox(height: 16),
           Text(
-            'Відновити пароль',
+            'Підтвердити код',
             style: TextStyle(
                 color: isThemeDark ? lightBG : blueMainDark,
                 fontSize: 32,
@@ -63,7 +63,7 @@ class _ResetPasswordWidgetState extends State<ResetPasswordWidget> {
                     child: Column(
                       children: [
                         Text(
-                          'Забули свій пароль? Не хвилюйтеся, введіть свою електронну адресу, щоб скинути поточний пароль.',
+                          'На вашу електронну адресу надіслано код автентифікації.',
                           style: TextStyle(
                             fontSize: 16,
                             color: isThemeDark ? lightBG : blueMainDark,
@@ -73,7 +73,7 @@ class _ResetPasswordWidgetState extends State<ResetPasswordWidget> {
                         TextField(
                           cursorColor: isThemeDark ? yellowMain : blueMain,
                           decoration: InputDecoration(
-                            hintText: 'Е-мейл',
+                            hintText: 'Ввести код',
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(8),
                             ),
@@ -104,7 +104,7 @@ class _ResetPasswordWidgetState extends State<ResetPasswordWidget> {
                         );
                       },
                       child: Text(
-                        'Надіслати код',
+                        'Підтвердити',
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
@@ -124,23 +124,38 @@ class _ResetPasswordWidgetState extends State<ResetPasswordWidget> {
                   SizedBox(height: 16),
                   TextButton(
                     onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const RegisterPage(),
-                        ),
+                      // Add the SnackBar to display the message
+                      final snackBar = SnackBar(
+                        content: Text('Код було надіслано.',
+                            style: TextStyle(
+                              color: isThemeDark ? darkBG : lightBG,
+                              fontSize: 16,
+                            )),
+                        backgroundColor: isThemeDark ? yellowMain : blueMain,
+                        duration: Duration(seconds: 1),
                       );
+
+                      // Show the SnackBar using the ScaffoldMessenger
+                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+
+                      // Uncomment the following lines if you want to navigate to another page
+                      // Navigator.push(
+                      //   context,
+                      //   MaterialPageRoute(
+                      //     builder: (context) => const RegisterPage(),
+                      //   ),
+                      // );
                     },
                     child: RichText(
                       text: TextSpan(
-                        text: 'Немає облікового запису? ',
+                        text: 'Не отримали код? ',
                         style: TextStyle(
                           color: isThemeDark ? lightBG : blueMainDark,
                           fontSize: 14,
                         ),
                         children: <TextSpan>[
                           TextSpan(
-                            text: 'Зареєструватися',
+                            text: 'Надіслати ще раз.',
                             style: TextStyle(
                                 color: isThemeDark ? yellowMain : blueMain,
                                 fontSize: 14,

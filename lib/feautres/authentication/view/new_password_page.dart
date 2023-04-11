@@ -1,13 +1,12 @@
+import 'package:audio_school/feautres/authentication/view/login_view.dart';
+import 'package:audio_school/feautres/authentication/view/reset_password_view.dart';
+import 'package:audio_school/feautres/authentication/view/view.dart';
 import 'package:audio_school/feautres/home/widget/logo_title.dart';
 import 'package:audio_school/feautres/theme/theme_data.dart';
 import 'package:flutter/material.dart';
 
-import '../../navigation/nav.dart';
-import '../widget/app_drawer.dart';
-import 'home_view.dart';
-
-class HomePage extends StatelessWidget {
-  const HomePage({
+class NewPasswordPage extends StatelessWidget {
+  const NewPasswordPage({
     super.key,
   });
 
@@ -20,21 +19,21 @@ class HomePage extends StatelessWidget {
       // bottomNavigationBar: MyBottomNavigationBar(),
       backgroundColor: isThemeDark ? darkBG : lightBG,
       appBar: AppBar(
-        automaticallyImplyLeading: false,
         backgroundColor: isThemeDark ? darkBG : lightBG,
         iconTheme: IconThemeData(color: isThemeDark ? lightBG : blueMainDark),
         elevation: 0.0,
         centerTitle: false,
-        title: const LogoTitle(),
-        actions: <Widget>[
-          Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Icon(Icons.more_vert_sharp,
-                  color: isThemeDark ? lightBG : darkBG)),
-        ],
+        title: Text(
+          'Назад',
+          style: TextStyle(
+            color: isThemeDark ? lightBG : blueMainDark,
+            fontSize: 20,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
       ),
       // drawer: AppDrawer(),
-      body: HomeView(),
+      body: NewPasswordView(),
     );
   }
 }
