@@ -1,6 +1,7 @@
 import 'package:audio_school/feautres/authentication/view/login_page.dart';
 import 'package:audio_school/feautres/home/home.dart';
 import 'package:audio_school/feautres/library/widgets/library_book.dart';
+import 'package:audio_school/feautres/profile/profile.dart';
 import 'package:flutter/material.dart';
 
 import '../../theme/theme_data.dart';
@@ -66,17 +67,25 @@ class _ProfileTabsState extends State<ProfileTabs> {
               setState(() {
                 _selectedIndex = i;
                 //  Navigator.pushNamed(context, _tabs[i]['routeName'] as String);
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => HomePage(),
-                  ),
-                );
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(
+                //     builder: (context) => HomePage(),
+                //   ),
+                // );
                 if (_tabs[i]['routeName'] as String == '/logout') {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder: (context) => LoginPage(),
+                    ),
+                  );
+                }
+                if (_tabs[i]['routeName'] as String == '/details') {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ProfileDetailsPage(),
                     ),
                   );
                 }
