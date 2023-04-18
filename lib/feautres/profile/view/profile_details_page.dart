@@ -18,6 +18,7 @@ class ProfileDetailsPage extends StatelessWidget {
       backgroundColor: isThemeDark ? darkBG : lightBG,
 
       appBar: AppBar(
+        iconTheme: IconThemeData(color: isThemeDark ? lightBG : blueMainDark),
         backgroundColor: isThemeDark ? darkBG : lightBG,
         elevation: 0.0,
         centerTitle: false,

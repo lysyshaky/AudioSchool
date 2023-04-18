@@ -143,6 +143,24 @@ class _ProfileDetailsState extends State<ProfileDetails> {
                   initialDate: _selectedDate ?? DateTime.now(),
                   firstDate: DateTime(1900),
                   lastDate: DateTime.now(),
+                  builder: (BuildContext context, Widget? child) {
+                    return Theme(
+                      data: Theme.of(context).copyWith(
+                        primaryColor: isThemeDark ? yellowMain : blueMain,
+                        accentColor: isThemeDark ? yellowMain : blueMain,
+                        colorScheme: ColorScheme.light(
+                          primary: isThemeDark ? yellowMain : blueMain,
+                          onPrimary: Colors.white,
+                          surface: isThemeDark ? yellowMain : blueMain,
+                          onSurface: Colors.black,
+                        ),
+                        buttonTheme: ButtonThemeData(
+                          textTheme: ButtonTextTheme.primary,
+                        ),
+                      ),
+                      child: child!,
+                    );
+                  },
                 );
                 if (pickedDate != null) {
                   setState(() {
@@ -183,6 +201,7 @@ class _ProfileDetailsState extends State<ProfileDetails> {
                 ),
               ),
             ),
+
             SizedBox(height: 24),
             Center(
               child: SizedBox(
