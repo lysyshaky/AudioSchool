@@ -1,6 +1,9 @@
 import 'dart:ui' as ui;
+import 'package:audio_school/feautres/book_details/widget/book_similar_widget.dart';
 import 'package:audio_school/feautres/theme/theme_data.dart';
 import 'package:flutter/material.dart';
+
+import '../../home/widget/book_list.dart';
 
 class BookDetailsPopup extends StatefulWidget {
   BookDetailsPopup({
@@ -14,6 +17,7 @@ class BookDetailsPopup extends StatefulWidget {
 
 class _BookDetailsPopupState extends State<BookDetailsPopup> {
   bool _isBookmarked = false;
+  bool _isDownloaded = true;
 
   final List<Map<String, String>> books = [
     {
@@ -223,6 +227,224 @@ class _BookDetailsPopupState extends State<BookDetailsPopup> {
                       fontWeight: FontWeight.bold,
                       color: isThemeDark ? lightBG : blueMainDark),
                 ),
+                SizedBox(height: 16),
+                Stack(
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            Text(
+                              '01',
+                              style: TextStyle(
+                                  fontSize: 18,
+                                  color: isThemeDark ? lightBG : blueMainDark),
+                            ),
+                            SizedBox(width: 8),
+                            Expanded(
+                              child: Text(
+                                'Вступ',
+                                style: TextStyle(
+                                    fontSize: 18,
+                                    color: isThemeDark ? lightBG : blueMainDark,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                            SizedBox(width: 4),
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            SizedBox(width: 28, height: 4),
+                            Expanded(
+                              child: Text(
+                                'Опис до вступу',
+                                style: TextStyle(
+                                    fontSize: 16,
+                                    color:
+                                        isThemeDark ? lightBG : blueMainDark),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                    Positioned(
+                      top: 0,
+                      bottom: 0,
+                      right: 16,
+                      child: GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            _isDownloaded = !_isDownloaded;
+                          });
+                        },
+                        child: Icon(
+                          _isDownloaded
+                              ? Icons.play_circle
+                              : Icons.file_download_rounded,
+                          color: _isDownloaded
+                              ? isThemeDark
+                                  ? yellowMain
+                                  : blueMain
+                              : isThemeDark
+                                  ? lightBG
+                                  : blueMainDark,
+                          size: 32,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 16),
+                Stack(
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            Text(
+                              '02',
+                              style: TextStyle(
+                                  fontSize: 18,
+                                  color: isThemeDark ? lightBG : blueMainDark),
+                            ),
+                            SizedBox(width: 8),
+                            Expanded(
+                              child: Text(
+                                'Історія України 19 століття ',
+                                style: TextStyle(
+                                    fontSize: 18,
+                                    color: isThemeDark ? lightBG : blueMainDark,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                            SizedBox(width: 4),
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            SizedBox(width: 28, height: 4),
+                            Expanded(
+                              child: Text(
+                                'Ключові моменти та факти битв. ',
+                                style: TextStyle(
+                                    fontSize: 16,
+                                    color:
+                                        isThemeDark ? lightBG : blueMainDark),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                    Positioned(
+                      top: 0,
+                      bottom: 0,
+                      right: 16,
+                      child: GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            // _isDownloaded = !_isDownloaded;
+                          });
+                        },
+                        child: Icon(Icons.file_download_rounded,
+                            color: isThemeDark ? lightBG : blueMainDark,
+                            size: 32),
+                        // child: Icon(
+                        //   _isDownloaded
+                        //       ? Icons.play_circle
+                        //       : Icons.file_download_rounded,
+                        //   color: _isDownloaded
+                        //       ? isThemeDark
+                        //           ? yellowMain
+                        //           : blueMain
+                        //       : isThemeDark
+                        //           ? lightBG
+                        //           : blueMainDark,
+                        //   size: 32,
+                        // ),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 16),
+                Stack(
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            Text(
+                              '03',
+                              style: TextStyle(
+                                  fontSize: 18,
+                                  color: isThemeDark ? lightBG : blueMainDark),
+                            ),
+                            SizedBox(width: 8),
+                            Expanded(
+                              child: Text(
+                                'Історія України 20 століття',
+                                style: TextStyle(
+                                    fontSize: 18,
+                                    color: isThemeDark ? lightBG : blueMainDark,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                            SizedBox(width: 4),
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            SizedBox(width: 28, height: 4),
+                            Expanded(
+                              child: Text(
+                                'Ключові моменти в історії 20 сто.. ',
+                                style: TextStyle(
+                                    fontSize: 16,
+                                    color:
+                                        isThemeDark ? lightBG : blueMainDark),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                    Positioned(
+                      top: 0,
+                      bottom: 0,
+                      right: 16,
+                      child: GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            // _isDownloaded = !_isDownloaded;
+                          });
+                        },
+                        child: Icon(Icons.file_download_rounded,
+                            color: isThemeDark ? lightBG : blueMainDark,
+                            size: 32),
+                        // child: Icon(
+                        //   _isDownloaded
+                        //       ? Icons.play_circle
+                        //       : Icons.file_download_rounded,
+                        //   color: _isDownloaded
+                        //       ? isThemeDark
+                        //           ? yellowMain
+                        //           : blueMain
+                        //       : isThemeDark
+                        //           ? lightBG
+                        //           : blueMainDark,
+                        //   size: 32,
+                        // ),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 16),
+                BookSimilar(),
               ],
             ),
           ),

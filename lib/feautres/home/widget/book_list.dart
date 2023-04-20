@@ -132,9 +132,7 @@ class BookList extends StatelessWidget {
                         expand: false,
                         builder: (BuildContext context,
                             ScrollController scrollController) {
-                          return BookDetailsPopup(
-                            scrollController: scrollController,
-                          );
+                          return BookDetailsPage();
                         },
                       );
                     },
