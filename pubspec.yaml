@@ -28,6 +28,12 @@ dependencies:
   json_serializable: ^6.6.1
   path_provider: ^2.0.13
   animated_splash_screen: ^1.3.0
+  #audio
+  rxdart: ^0.27.7
+  just_audio_mpv: ^0.1.6
+  just_audio_windows: ^0.2.0
+  just_audio: ^0.9.18
+  audio_session: ^0.1.6
 
 
 dev_dependencies:
@@ -37,6 +43,7 @@ dev_dependencies:
   mocktail: ^0.3.0
   very_good_analysis: ^3.1.0
   flutter_lints: ^2.0.0
+
 
 
 

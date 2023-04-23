@@ -1,8 +1,10 @@
 import 'dart:ui' as ui;
 import 'package:audio_school/feautres/book_details/widget/book_similar_widget.dart';
+import 'package:audio_school/feautres/book_listen/book_liten.dart';
 import 'package:audio_school/feautres/theme/theme_data.dart';
 import 'package:flutter/material.dart';
 
+import '../../book_listen/widget/listen_widget.dart';
 import '../../home/widget/book_list.dart';
 
 class BookDetailsPopup extends StatefulWidget {
@@ -76,7 +78,9 @@ class _BookDetailsPopupState extends State<BookDetailsPopup> {
                   isThemeDark
                       ? Colors.black.withOpacity(0.6)
                       : Colors.white.withOpacity(0.6),
-                  isThemeDark ? Colors.black.withOpacity(0.8) : Colors.white
+                  isThemeDark
+                      ? Colors.black.withOpacity(0.8)
+                      : Colors.white.withOpacity(0.8)
                 ],
               ),
             ),
@@ -443,8 +447,9 @@ class _BookDetailsPopupState extends State<BookDetailsPopup> {
                     ),
                   ],
                 ),
-                SizedBox(height: 16),
+                SizedBox(height: 0),
                 BookSimilar(),
+                SizedBox(height: 16),
               ],
             ),
           ),
@@ -507,6 +512,32 @@ class _BookDetailsPopupState extends State<BookDetailsPopup> {
                 ),
                 ElevatedButton.icon(
                   onPressed: () {
+                    // Navigator.push(
+                    //   context,
+                    //   PageRouteBuilder(
+                    //     pageBuilder: (context, animation, secondaryAnimation) =>
+                    //         PlayScreen(
+                    //       book: books[index]['title']!,
+                    //       title: books[index]['title']!,
+                    //       image: books[index]['image']!,
+                    //       author: books[index]['author']!,
+                    //     ),
+                    //     opaque: false,
+                    //   ),
+                    // );
+                    // Navigator.push(
+                    //     context,
+                    //     MaterialPageRoute(
+                    //         builder: (context) => PlayScreen(
+                    //               title: books[index]['title']!,
+                    //               author: books[index]['author']!,
+                    //               image: books[index]['image']!,
+                    //               book: books[index]['title']!,
+                    //             )));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => BookListenPage()));
                     // Handle the listen button press
                   },
                   icon: Icon(Icons.headphones,
