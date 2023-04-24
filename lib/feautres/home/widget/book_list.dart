@@ -8,35 +8,35 @@ class BookList extends StatelessWidget {
 
   final List<Map<String, String>> books = [
     {
-      'image': '/Users/yuralysyshak/Documents/audio_school/assets/test.png',
+      'image': 'assets/images/test.png',
       'title': 'Історія України',
       'author': 'О.В. Матринюк',
       'listenTime': '30 хв',
       'readTime': '45 хв',
     },
     {
-      'image': '/Users/yuralysyshak/Documents/audio_school/assets/test.png',
+      'image': 'assets/images/test.png',
       'title': 'Історія України',
       'author': 'О.В. Матринюк',
       'listenTime': '5 хв',
       'readTime': '12 хв',
     },
     {
-      'image': '/Users/yuralysyshak/Documents/audio_school/assets/test.png',
+      'image': 'assets/images/test.png',
       'title': 'Історія України',
       'author': 'О.В. Матринюк',
       'listenTime': '20 хв',
       'readTime': '28 хв',
     },
     {
-      'image': '/Users/yuralysyshak/Documents/audio_school/assets/test.png',
+      'image': 'assets/images/test.png',
       'title': 'Історія України',
       'author': 'О.В. Матринюк',
       'listenTime': '20 хв',
       'readTime': '28 хв',
     },
     {
-      'image': '/Users/yuralysyshak/Documents/audio_school/assets/test.png',
+      'image': 'assets/images/test.png',
       'title': 'Історія України',
       'author': 'О.В. Матринюк',
       'listenTime': '20 хв',

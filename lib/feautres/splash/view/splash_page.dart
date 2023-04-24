@@ -18,12 +18,10 @@ class SplashPage extends StatelessWidget {
       body: Center(
         child: isThemeDark
             ? const Image(
-                image: AssetImage(
-                    '/Users/yuralysyshak/Documents/audio_school/assets/logo-dark.png'),
+                image: AssetImage('assets/images/logo-dark.png'),
               )
             : const Image(
-                image: AssetImage(
-                    '/Users/yuralysyshak/Documents/audio_school/assets/logo.png'),
+                image: AssetImage('assets/images/logo.png'),
               ),
       ),
     );

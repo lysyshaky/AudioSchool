@@ -4,7 +4,7 @@ import 'package:audio_school/feautres/book_listen/book_liten.dart';
 import 'package:audio_school/feautres/theme/theme_data.dart';
 import 'package:flutter/material.dart';
 
-import '../../book_listen/widget/listen_widget.dart';
+import '../../book_read/view/read_page.dart';
 import '../../home/widget/book_list.dart';
 
 class BookDetailsPopup extends StatefulWidget {
@@ -23,7 +23,7 @@ class _BookDetailsPopupState extends State<BookDetailsPopup> {
 
   final List<Map<String, String>> books = [
     {
-      'image': '/Users/yuralysyshak/Documents/audio_school/assets/test.png',
+      'image': 'assets/images/test.png',
       'title': 'Історія України',
       'author': 'О.В. Матринюк',
       'listenTime': '30 хв',
@@ -490,6 +490,10 @@ class _BookDetailsPopupState extends State<BookDetailsPopup> {
               children: [
                 ElevatedButton.icon(
                   onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => BookReadPage()));
                     // Handle the read button press
                   },
                   icon: Icon(Icons.book, color: isThemeDark ? darkBG : lightBG),

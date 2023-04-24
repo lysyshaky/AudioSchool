@@ -36,6 +36,12 @@ class _ProfileTabsState extends State<ProfileTabs> {
       'routeName': '/subscription',
     },
     {
+      'icon': Icons.theater_comedy_outlined,
+      'text': 'Стати частиною команди',
+      'hasSwitch': false,
+      'routeName': '/team',
+    },
+    {
       'icon': Icons.contact_support_outlined,
       'text': 'Підтримка',
       'hasSwitch': false,

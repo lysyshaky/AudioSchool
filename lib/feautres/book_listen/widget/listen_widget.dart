@@ -1,4 +1,5 @@
 import 'package:audio_school/feautres/book_listen/widget/common.dart';
+import 'package:audio_school/feautres/book_read/view/read_page.dart';
 import 'package:audio_school/feautres/home/home.dart';
 import 'package:audio_school/feautres/navigation/nav.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +17,7 @@ import '../../theme/theme_data.dart';
 int index = 0;
 final List<Map<String, String>> books = [
   {
-    'image': '/Users/yuralysyshak/Documents/audio_school/assets/test.png',
+    'image': 'assets/images/test.png',
     'title': 'Історія України',
     'author': 'О.В. Матринюк',
     'listenTime': '30 хв',
@@ -26,6 +27,7 @@ final List<Map<String, String>> books = [
   },
   // Add more books here
 ];
+bool _isTextContainerVisible = false;
 
 class PlayScreen extends StatefulWidget {
   PlayScreen({
@@ -114,6 +116,12 @@ class _PlayScreenState extends State<PlayScreen> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
+    void _toggleTextContainerVisibility() {
+      setState(() {
+        _isTextContainerVisible = !_isTextContainerVisible;
+      });
+    }
+
     final bool isThemeDark = isDark(context);
     return Scaffold(
       backgroundColor: isThemeDark ? darkBG : lightBG,
@@ -146,6 +154,16 @@ class _PlayScreenState extends State<PlayScreen> with WidgetsBindingObserver {
             icon: Icon(Icons.format_align_left,
                 color: isThemeDark ? lightBG : blueMainDark),
             onPressed: () {
+              _toggleTextContainerVisibility();
+              // Implement your functionality for showing text here.
+            },
+          ),
+          IconButton(
+            icon: Icon(Icons.book_rounded,
+                color: isThemeDark ? lightBG : blueMainDark),
+            onPressed: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => BookReadPage()));
               // Implement your functionality for showing text here.
             },
           ),
@@ -196,69 +214,143 @@ class _PlayScreenState extends State<PlayScreen> with WidgetsBindingObserver {
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
-              child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: <Widget>[
-                    SizedBox(
-                      height: 30,
-                    ),
-                    Container(
-                      height: 300,
-                      child: ClipRRect(
-                          borderRadius: BorderRadius.circular(15),
-                          child: Image.asset(
-                            books[index]['image']!,
-                            fit: BoxFit.cover,
-                          )),
-                    ),
-                    SizedBox(
-                      height: 40,
-                    ),
+              child: SingleChildScrollView(
+                child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: <Widget>[
+                      SizedBox(
+                        height: 30,
+                      ),
+                      Container(
+                        height: 300,
+                        child: ClipRRect(
+                            borderRadius: BorderRadius.circular(15),
+                            child: Image.asset(
+                              books[index]['image']!,
+                              fit: BoxFit.cover,
+                            )),
+                      ),
+                      SizedBox(
+                        height: 40,
+                      ),
 
-                    Row(
-                      children: [
-                        Text(
-                          books[index]['title']!,
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 24,
-                              color: isThemeDark ? lightBG : blueMainDark),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 8),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Text(
-                          books[index]['author']!,
-                          style: TextStyle(
-                              fontSize: 18,
-                              color: isThemeDark ? lightBG : blueMainDark),
-                        ),
-                      ],
-                    ),
+                      Row(
+                        children: [
+                          Text(
+                            books[index]['title']!,
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 24,
+                                color: isThemeDark ? lightBG : blueMainDark),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 8),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text(
+                            books[index]['author']!,
+                            style: TextStyle(
+                                fontSize: 18,
+                                color: isThemeDark ? lightBG : blueMainDark),
+                          ),
+                        ],
+                      ),
 
-                    SizedBox(
-                      height: 24,
-                    ),
-                    ControlButtons(_player),
-                    // Display seek bar. Using StreamBuilder, this widget rebuilds
-                    // each time the position, buffered position or duration changes.
-                    StreamBuilder<PositionData>(
-                      stream: _positionDataStream,
-                      builder: (context, snapshot) {
-                        final positionData = snapshot.data;
-                        return SeekBar(
-                          duration: positionData?.duration ?? Duration.zero,
-                          position: positionData?.position ?? Duration.zero,
-                          bufferedPosition:
-                              positionData?.bufferedPosition ?? Duration.zero,
-                          onChangeEnd: _player.seek,
-                        );
-                      },
-                    ),
-                  ]),
+                      SizedBox(
+                        height: 24,
+                      ),
+                      ControlButtons(_player),
+                      // Display seek bar. Using StreamBuilder, this widget rebuilds
+                      // each time the position, buffered position or duration changes.
+                      StreamBuilder<PositionData>(
+                        stream: _positionDataStream,
+                        builder: (context, snapshot) {
+                          final positionData = snapshot.data;
+                          return SeekBar(
+                            duration: positionData?.duration ?? Duration.zero,
+                            position: positionData?.position ?? Duration.zero,
+                            bufferedPosition:
+                                positionData?.bufferedPosition ?? Duration.zero,
+                            onChangeEnd: _player.seek,
+                          );
+                        },
+                      ),
+                      SizedBox(height: 16),
+                      if (_isTextContainerVisible)
+                        Positioned(
+                          bottom: 0,
+                          left: 0,
+                          right: 0,
+                          child: TextContainer(
+                            onClose: () {
+                              _toggleTextContainerVisibility();
+                            },
+                          ),
+                        ),
+                      SizedBox(height: 16),
+                    ]),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class TextContainer extends StatefulWidget {
+  final VoidCallback onClose;
+  TextContainer({required this.onClose});
+  @override
+  _TextContainerState createState() => _TextContainerState();
+}
+
+class _TextContainerState extends State<TextContainer> {
+  @override
+  Widget build(BuildContext context) {
+    final bool isThemeDark = isDark(context);
+    return Container(
+      decoration: BoxDecoration(
+        color: isThemeDark ? blueMainDark : blueMain.withOpacity(0.2),
+        borderRadius: BorderRadius.circular(12), // Set border radius here
+      ),
+
+      // Container attributes such as padding, color, etc.
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Text(
+                  'Читання',
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    color: isThemeDark ? lightBG : blueMainDark,
+                  ),
+                  // Style for the header
+                ),
+                Spacer(),
+                IconButton(
+                  icon: Icon(Icons.close,
+                      color: isThemeDark ? lightBG : blueMainDark),
+                  onPressed: widget.onClose,
+                ),
+              ],
+            ),
+            SizedBox(height: 8),
+            Text(
+              '''Далеко далеко, за горами слова, далеко від країн Vokalia і Consonantia живуть сліпі тексти. Розділені вони живуть у Bookmarksgrove прямо на узбережжі Семантики, великого мовного океану. Невелика річка на ім'я Дуден протікає біля їхнього місця і постачає його необхідними регеліяліями. Це райська країна, в якій засмажені частини речень летять до рота.''',
+              // Style for the text
+              style: TextStyle(
+                fontSize: 16,
+                color: isThemeDark ? lightBG : blueMainDark,
+              ),
+              // Your text color),
             ),
           ],
         ),

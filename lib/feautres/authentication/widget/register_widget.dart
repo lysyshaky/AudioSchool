@@ -28,17 +28,16 @@ class _RegisterWidgetState extends State<RegisterWidget> {
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           SizedBox(height: 0),
-          Container(
-            alignment: Alignment.center,
-            width: 320,
-            height: 70,
-            child: isThemeDark
-                ? const Image(
-                    image: AssetImage(
-                        '/Users/yuralysyshak/Documents/audio_school/assets/logo-dark.png'))
-                : const Image(
-                    image: AssetImage(
-                        '/Users/yuralysyshak/Documents/audio_school/assets/logo.png')),
+          Center(
+            child: Container(
+              alignment: Alignment.center,
+              width: 320,
+              height: 70,
+              child: isThemeDark
+                  ? const Image(
+                      image: AssetImage('assets/images/logo-dark.png'))
+                  : const Image(image: AssetImage('assets/images/logo.png')),
+            ),
           ),
           SizedBox(height: 16),
           Text(

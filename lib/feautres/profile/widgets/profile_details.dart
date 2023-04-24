@@ -47,7 +47,7 @@ class _ProfileDetailsState extends State<ProfileDetails> {
                   radius: 60,
                   backgroundColor: isThemeDark ? yellowMain : blueMain,
                   backgroundImage: AssetImage(
-                      '/Users/yuralysyshak/Documents/audio_school/assets/test.png'), // Replace with actual image
+                      'assets/images/test.png'), // Replace with actual image
                 ),
               ),
             ),
@@ -202,7 +202,7 @@ class _ProfileDetailsState extends State<ProfileDetails> {
               ),
             ),
 
-            SizedBox(height: 24),
+            SizedBox(height: 48),
             Center(
               child: SizedBox(
                 width: 358,

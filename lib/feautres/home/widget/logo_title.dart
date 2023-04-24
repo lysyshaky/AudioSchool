@@ -13,12 +13,8 @@ class LogoTitle extends StatelessWidget {
       width: 180,
       height: 180,
       child: isThemeDark
-          ? const Image(
-              image: AssetImage(
-                  '/Users/yuralysyshak/Documents/audio_school/assets/logo-dark.png'))
-          : const Image(
-              image: AssetImage(
-                  '/Users/yuralysyshak/Documents/audio_school/assets/logo.png')),
+          ? const Image(image: AssetImage('assets/images/logo-dark.png'))
+          : const Image(image: AssetImage('assets/images/logo.png')),
     );
   }
 }

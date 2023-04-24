@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 bool isDark(BuildContext context) {
-  return Theme.of(context).brightness == Brightness.dark;
+  return Theme.of(context).brightness == Brightness.light;
 }
 
 const darkBG = Color.fromRGBO(24, 26, 26, 1);

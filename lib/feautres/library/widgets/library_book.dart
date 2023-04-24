@@ -143,7 +143,7 @@ import 'package:flutter/material.dart';
 class LibraryPage extends StatelessWidget {
   final List<Map<String, String>> books = [
     {
-      'image': '/Users/yuralysyshak/Documents/audio_school/assets/test.png',
+      'image': 'assets/images/test.png',
       'title': 'Історія України',
       'author': 'О.В. Матринюк',
       'listenTime': '30 хв',
@@ -151,7 +151,7 @@ class LibraryPage extends StatelessWidget {
       'description': 'Книга про історію України',
     },
     {
-      'image': '/Users/yuralysyshak/Documents/audio_school/assets/test.png',
+      'image': 'assets/images/test.png',
       'title': 'Історія України',
       'author': 'О.В. Матринюк',
       'listenTime': '5 хв',
@@ -159,7 +159,7 @@ class LibraryPage extends StatelessWidget {
       'description': 'Книга про історію України',
     },
     {
-      'image': '/Users/yuralysyshak/Documents/audio_school/assets/test.png',
+      'image': 'assets/images/test.png',
       'title': 'Історія України',
       'author': 'О.В. Матринюк',
       'listenTime': '20 хв',
@@ -167,7 +167,7 @@ class LibraryPage extends StatelessWidget {
       'description': 'Книга про історію України',
     },
     {
-      'image': '/Users/yuralysyshak/Documents/audio_school/assets/test.png',
+      'image': 'assets/images/test.png',
       'title': 'Історія України',
       'author': 'О.В. Матринюк',
       'listenTime': '20 хв',
@@ -175,7 +175,7 @@ class LibraryPage extends StatelessWidget {
       'description': 'Книга про історію України',
     },
     {
-      'image': '/Users/yuralysyshak/Documents/audio_school/assets/test.png',
+      'image': 'assets/images/test.png',
       'title': 'Історія України',
       'author': 'О.В. Матринюк',
       'listenTime': '20 хв',
