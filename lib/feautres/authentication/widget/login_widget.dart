@@ -3,6 +3,7 @@ import 'package:audio_school/feautres/navigation/nav.dart';
 import 'package:audio_school/feautres/theme/theme_data.dart';
 import 'package:flutter/material.dart';
 
+import 'package:audio_school/api/api.dart';
 import '../view/register_page.dart';
 
 class LoginWidget extends StatefulWidget {
@@ -13,11 +14,45 @@ class LoginWidget extends StatefulWidget {
 }
 
 class _LoginWidgetState extends State<LoginWidget> {
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
   bool _obscureText = true;
   @override
   void initState() {
     super.initState();
     _obscureText = true;
+  }
+
+  String _errorMessage = '';
+  Future<void> _loginUser() async {
+    try {
+      final result =
+          await loginUser(emailController.text, passwordController.text);
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => NavPage(),
+        ),
+      );
+    } catch (e) {
+      // setState(() {
+      //   _errorMessage = 'Невірний логін або пароль';
+      // });
+      final bool isThemeDark = isDark(context);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          backgroundColor: isThemeDark ? yellowMain : blueMain,
+          content: Text(
+            'Невірний логін або пароль!',
+            style: TextStyle(
+              color: isThemeDark ? darkBG : lightBG,
+              fontSize: 16,
+            ),
+          ),
+        ),
+      );
+      print('Error: $e');
+    }
   }
 
   @override
@@ -64,6 +99,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                     child: Column(
                       children: [
                         TextField(
+                          controller: emailController,
                           cursorColor: isThemeDark ? yellowMain : blueMain,
                           decoration: InputDecoration(
                             hintText: 'Е-мейл',
@@ -84,6 +120,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                           data: Theme.of(context)
                               .copyWith(accentColor: yellowMain),
                           child: TextFormField(
+                            controller: passwordController,
                             cursorColor: isThemeDark ? yellowMain : blueMain,
                             obscureText: _obscureText,
                             validator: (value) {
@@ -119,23 +156,39 @@ class _LoginWidgetState extends State<LoginWidget> {
                               ),
                             ),
                           ),
-                        )
+                        ),
                       ],
                     ),
                   ),
+                  SizedBox(height: 0),
+                  _errorMessage.isNotEmpty
+                      ? Align(
+                          alignment: Alignment.topLeft,
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 16.0, left: 16),
+                            child: Text(
+                              _errorMessage,
+                              style: TextStyle(
+                                  color: Colors.red,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                        )
+                      : SizedBox(),
                   SizedBox(height: 16),
                   SizedBox(
                     width: 326,
                     height: 48,
                     child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const NavPage(),
-                          ),
-                        );
-                      },
+                      onPressed:
+                          // Navigator.push(
+                          //   context,
+                          //   MaterialPageRoute(
+                          //     builder: (context) => const NavPage(),
+                          //   ),
+                          // );
+                          _loginUser,
                       child: Text(
                         'Увійти',
                         style: TextStyle(
@@ -203,7 +256,14 @@ class _LoginWidgetState extends State<LoginWidget> {
                       Padding(
                         padding: const EdgeInsets.all(8),
                         child: ElevatedButton.icon(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const NavPage(),
+                              ),
+                            );
+                          },
                           icon: Icon(
                             Icons.facebook,
                             color: isThemeDark ? darkBG : lightBG,

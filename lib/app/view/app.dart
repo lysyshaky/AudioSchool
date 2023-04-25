@@ -7,6 +7,7 @@ import 'package:audio_school/feautres/navigation/nav.dart';
 import 'package:audio_school/l10n/l10n.dart';
 
 import 'package:audio_school/feautres/search/search.dart';
+
 import 'package:flutter/material.dart';
 import '../../feautres/splash/view/splash_page.dart';
 import '../../feautres/theme/theme_data.dart';

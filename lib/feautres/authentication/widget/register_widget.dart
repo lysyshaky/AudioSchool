@@ -3,6 +3,7 @@ import 'package:audio_school/feautres/theme/theme_data.dart';
 import 'package:flutter/material.dart';
 
 import '../../navigation/view/navigation_view.dart';
+import 'package:audio_school/api/api.dart';
 
 class RegisterWidget extends StatefulWidget {
   const RegisterWidget({Key? key}) : super(key: key);
@@ -12,11 +13,50 @@ class RegisterWidget extends StatefulWidget {
 }
 
 class _RegisterWidgetState extends State<RegisterWidget> {
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
   bool _obscureText = true;
   @override
   void initState() {
     super.initState();
     _obscureText = true;
+  }
+
+  Future<void> _register() async {
+    try {
+      final bool isRegistered = await registerUser(
+        _nameController.text,
+        _emailController.text,
+        _passwordController.text,
+      );
+
+      if (isRegistered) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => NavPage(),
+          ),
+        );
+      } else {
+        final bool isThemeDark = isDark(context);
+        // Show a message or a dialog to indicate the registration was not successful
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            backgroundColor: isThemeDark ? yellowMain : blueMain,
+            content: Text(
+              'Реєстрація не вдалась!',
+              style: TextStyle(
+                color: isThemeDark ? darkBG : lightBG,
+                fontSize: 16,
+              ),
+            ),
+          ),
+        );
+      }
+    } catch (e) {
+      print('Error: $e');
+    }
   }
 
   @override
@@ -64,6 +104,7 @@ class _RegisterWidgetState extends State<RegisterWidget> {
                     child: Column(
                       children: [
                         TextField(
+                          controller: _nameController,
                           cursorColor: isThemeDark ? yellowMain : blueMain,
                           decoration: InputDecoration(
                             hintText: 'Ім\'я та прізвище',
@@ -81,6 +122,7 @@ class _RegisterWidgetState extends State<RegisterWidget> {
                         ),
                         SizedBox(height: 16),
                         TextField(
+                          controller: _emailController,
                           cursorColor: isThemeDark ? yellowMain : blueMain,
                           decoration: InputDecoration(
                             hintText: 'Е-мейл',
@@ -101,11 +143,12 @@ class _RegisterWidgetState extends State<RegisterWidget> {
                           data: Theme.of(context)
                               .copyWith(accentColor: yellowMain),
                           child: TextFormField(
+                            controller: _passwordController,
                             cursorColor: isThemeDark ? yellowMain : blueMain,
                             obscureText: _obscureText,
                             validator: (value) {
-                              if (value!.isEmpty) {
-                                return 'Будь ласка введіть пароль';
+                              if (value!.isEmpty && value.length < 8) {
+                                return 'Пароль повинен бути не менше 8 символів';
                               }
                               return null;
                             },
@@ -145,14 +188,14 @@ class _RegisterWidgetState extends State<RegisterWidget> {
                     width: 326,
                     height: 48,
                     child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const NavPage(),
-                          ),
-                        );
-                      },
+                      onPressed: _register,
+                      // Navigator.push(
+                      //   context,
+                      //   MaterialPageRoute(
+                      //     builder: (context) => const NavPage(),
+                      //   ),
+                      // );
+
                       child: Text(
                         'Створити обліковий запис',
                         style: TextStyle(

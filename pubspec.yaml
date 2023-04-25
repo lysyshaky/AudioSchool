@@ -34,6 +34,9 @@ dependencies:
   just_audio_windows: ^0.2.0
   just_audio: ^0.9.18
   audio_session: ^0.1.6
+  #api
+  chopper: ^6.1.1
+  dio: ^5.1.1
 
 
 dev_dependencies:
