@@ -4,11 +4,13 @@ import 'package:audio_school/feautres/authentication/view/login_page.dart';
 import 'package:audio_school/feautres/authentication/view/register_page.dart';
 import 'package:audio_school/feautres/home/home.dart';
 import 'package:audio_school/feautres/navigation/nav.dart';
+import 'package:audio_school/feautres/test/test.dart';
 import 'package:audio_school/l10n/l10n.dart';
 
 import 'package:audio_school/feautres/search/search.dart';
 
 import 'package:flutter/material.dart';
+import '../../feautres/authentication/widget/login_widget.dart';
 import '../../feautres/splash/view/splash_page.dart';
 import '../../feautres/theme/theme_data.dart';
 import '../../feautres/library/library.dart';
@@ -29,6 +31,9 @@ class App extends StatelessWidget {
           selectionColor: yellowMain,
         ),
       ),
+      routes: {
+        NavPage.routeName: (context) => NavPage(userData: userData),
+      },
       debugShowCheckedModeBanner: false,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,

@@ -5,21 +5,21 @@ import 'package:audio_school/feautres/library/widgets/library_book.dart';
 import 'package:audio_school/feautres/library/widgets/library_button.dart';
 import 'package:flutter/material.dart';
 
-import '../widgets/profile_tabs.dart';
-import '../widgets/user_status.dart';
+import '../widget/profile_tabs.dart';
+import '../widget/user_status.dart';
 
 class ProfileView extends StatelessWidget {
+  final Map<String, dynamic> userData;
+
+  const ProfileView({Key? key, required this.userData}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     final isThemeDark = isDark(context);
     return SingleChildScrollView(
       child: Column(
         children: [
-          const UserStatus(
-            userName: 'Юрій Лисишак',
-            isPremium: true,
-            email: 'yuralysyshak@gmail.com',
-          ),
+          UserStatus(userData: userData),
           Padding(
             padding: EdgeInsets.all(16.0),
             child: Divider(

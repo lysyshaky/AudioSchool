@@ -1,9 +1,15 @@
+import 'dart:convert';
+
+import 'package:audio_school/feautres/authentication/widget/login_widget.dart';
 import 'package:audio_school/feautres/book_listen/book_liten.dart';
 import 'package:audio_school/feautres/book_listen/widget/listen_widget.dart';
 import 'package:audio_school/feautres/book_read/widget/text_size.widget.dart';
 import 'package:audio_school/feautres/navigation/nav.dart';
 import 'package:flutter/material.dart';
 
+import 'package:http/http.dart' as http;
+
+import 'package:audio_school/api/api.dart';
 import '../../book_details/view/book_details_page.dart';
 import '../../theme/theme_data.dart';
 
@@ -31,6 +37,52 @@ class ReadScreen extends StatefulWidget {
 }
 
 class _ReadScreenState extends State<ReadScreen> with WidgetsBindingObserver {
+  Future<void> _loginUser() async {
+    final response = await http.post(
+      Uri.parse('$API_URL/auth/login'),
+      // body: jsonEncode({'email': email, 'password': password}),
+      headers: {'Content-Type': 'application/json'},
+    );
+    print(response.body);
+    if (response.statusCode == 200) {
+      final token = jsonDecode(response.body)['tokens']['access']['token'];
+      print(token);
+      final userData = await _fetchUserData(token as String);
+      print("READ:$userData");
+      // Navigator.push(
+      //   context,
+      //   MaterialPageRoute(
+      //     builder: (context) =>
+      //         NavPage(userData: userData as Map<String, dynamic>),
+      //   ),
+      // );
+    } else {
+      // Define an initial value for userData
+    }
+  }
+
+  Future<Map<String, dynamic>> _fetchUserData(String token) async {
+    final response = await http.get(
+      Uri.parse('$API_URL/users/me'),
+      headers: {'Authorization': 'Bearer $token'},
+    );
+
+    if (response.statusCode == 200) {
+      return jsonDecode(response.body) as Map<String, dynamic>;
+    } else {
+      throw Exception('Failed to load user data');
+    }
+  }
+
+  void _navigateBackTwice(BuildContext context) {
+    if (Navigator.canPop(context)) {
+      Navigator.pop(context); // Pop the first page
+    }
+    if (Navigator.canPop(context)) {
+      Navigator.pop(context); // Pop the second page
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final bool isThemeDark = isDark(context);
@@ -48,7 +100,9 @@ class _ReadScreenState extends State<ReadScreen> with WidgetsBindingObserver {
           onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => NavPage()),
+              MaterialPageRoute(
+                builder: (context) => NavPage(userData: userData),
+              ),
             );
           },
         ),

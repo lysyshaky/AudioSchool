@@ -5,7 +5,9 @@ import 'package:audio_school/feautres/home/widget/class_button.dart';
 import 'package:flutter/material.dart';
 
 class BookReadView extends StatelessWidget {
-  const BookReadView({super.key});
+  final Map<String, dynamic> userData;
+
+  const BookReadView({required this.userData, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

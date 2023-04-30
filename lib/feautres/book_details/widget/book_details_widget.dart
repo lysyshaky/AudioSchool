@@ -1,4 +1,5 @@
 import 'dart:ui' as ui;
+import 'package:audio_school/feautres/authentication/widget/login_widget.dart';
 import 'package:audio_school/feautres/book_details/widget/book_similar_widget.dart';
 import 'package:audio_school/feautres/book_listen/book_liten.dart';
 import 'package:audio_school/feautres/theme/theme_data.dart';
@@ -493,7 +494,8 @@ class _BookDetailsPopupState extends State<BookDetailsPopup> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => BookReadPage()));
+                            builder: (context) =>
+                                BookReadPage(userData: userData)));
                     // Handle the read button press
                   },
                   icon: Icon(Icons.book, color: isThemeDark ? darkBG : lightBG),

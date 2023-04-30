@@ -50,3 +50,21 @@ Future<Map<String, dynamic>> fetchData() async {
     throw Exception('Failed to load data from API');
   }
 }
+
+Future<Map<String, dynamic>> fetchUserData(String token) async {
+  final response = await http.get(
+    Uri.parse(
+        'http://localhost:3000/v1/users/me?cache=${DateTime.now().millisecondsSinceEpoch}'),
+    headers: {
+      'Authorization': 'Bearer $token',
+    },
+  );
+
+  if (response.statusCode == 200) {
+    // If the call to the server was successful, parse the JSON
+    return jsonDecode(response.body) as Map<String, dynamic>;
+  } else {
+    // If that call was not successful, throw an error.
+    throw Exception('Failed to load user data from API');
+  }
+}

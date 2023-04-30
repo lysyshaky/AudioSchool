@@ -12,6 +12,7 @@ import 'dart:ui' as ui;
 
 import 'package:rxdart/rxdart.dart';
 
+import '../../authentication/widget/login_widget.dart';
 import '../../theme/theme_data.dart';
 
 int index = 0;
@@ -137,7 +138,9 @@ class _PlayScreenState extends State<PlayScreen> with WidgetsBindingObserver {
           onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => NavPage()),
+              MaterialPageRoute(
+                builder: (context) => NavPage(userData: userData),
+              ),
             );
           },
         ),
@@ -162,8 +165,11 @@ class _PlayScreenState extends State<PlayScreen> with WidgetsBindingObserver {
             icon: Icon(Icons.book_rounded,
                 color: isThemeDark ? lightBG : blueMainDark),
             onPressed: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => BookReadPage()));
+              // With this line
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => BookReadPage(userData: userData)));
               // Implement your functionality for showing text here.
             },
           ),

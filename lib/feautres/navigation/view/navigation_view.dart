@@ -6,21 +6,24 @@ import '../../search/search.dart';
 import '../../home/view/home_page.dart';
 import '../../theme/theme_data.dart';
 
+int _currentIndex = 0;
+
 class NavPage extends StatefulWidget {
-  const NavPage({Key? key}) : super(key: key);
+  static const routeName = '/navPage';
+  final Map<String, dynamic> userData;
+
+  const NavPage({Key? key, required this.userData}) : super(key: key);
 
   @override
   _NavPageState createState() => _NavPageState();
 }
 
 class _NavPageState extends State<NavPage> {
-  int _currentIndex = 0;
-
-  final List<Widget> _children = [
+  late final List<Widget> _children = [
     HomePage(),
     SearchPage(),
     LibraryPage(),
-    ProfilePage(),
+    ProfilePage(userData: widget.userData),
   ];
 
   void onTabTapped(int index) {
@@ -45,7 +48,6 @@ class _NavPageState extends State<NavPage> {
           ),
         ),
         child: BottomNavigationBar(
-          // fixedColor: isThemeDark ? darkBG : lightBG,
           onTap: onTabTapped,
           currentIndex: _currentIndex,
           selectedItemColor: isThemeDark ? yellowMain : blueMain,

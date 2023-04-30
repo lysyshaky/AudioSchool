@@ -1,7 +1,13 @@
+import 'package:audio_school/api/api.dart';
 import 'package:audio_school/feautres/profile/profile.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../../authentication/widget/login_widget.dart';
 import '../../theme/theme_data.dart';
+import 'dart:convert';
+
+import 'package:http/http.dart' as http;
 
 class ProfileDetails extends StatefulWidget {
   @override
@@ -9,14 +15,119 @@ class ProfileDetails extends StatefulWidget {
 }
 
 class _ProfileDetailsState extends State<ProfileDetails> {
-  TextEditingController _nameController =
-      TextEditingController(text: 'Юрій Лисишак');
-  TextEditingController _emailController =
-      TextEditingController(text: 'yuralysyshak@gmail.com');
+  late Future<Map<String, dynamic>> _userDataFuture;
+  TextEditingController _nameController = TextEditingController(
+    text: '${userData!['name']}',
+  );
+  TextEditingController _emailController = TextEditingController(
+    text: '${userData!['email']}',
+  );
 
   TextEditingController _dateController =
-      TextEditingController(text: '12.12.2020');
+      TextEditingController(text: '${userData!['dateOfBirth']}');
   DateTime? _selectedDate;
+  Future<void> _updateUserData(Map<String, dynamic> userData) async {
+    final response = await http.put(
+      Uri.parse('$API_URL/users/me'),
+      body: jsonEncode(userData),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      // Show a success message to the user
+      final bool isThemeDark = isDark(context);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            'Дані успішно збережено!',
+            style: TextStyle(
+              color: isThemeDark ? darkBG : lightBG,
+              fontSize: 16,
+            ),
+          ),
+          backgroundColor: isThemeDark ? yellowMain : blueMain,
+        ),
+      );
+    } else {
+      // Show an error message to the user
+      final bool isThemeDark = isDark(context);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            'Не вдалось зберегти дані!',
+            style: TextStyle(
+              color: isThemeDark ? darkBG : lightBG,
+              fontSize: 16,
+            ),
+          ),
+          backgroundColor: isThemeDark ? yellowMain : blueMain,
+        ),
+      );
+    }
+  }
+
+  Future<Map<String, dynamic>> _fetchUserData(String token) async {
+    final response = await http.get(
+      Uri.parse('$API_URL/users/me'),
+      headers: {'Authorization': 'Bearer $token'},
+    );
+
+    if (response.statusCode == 200) {
+      final userData = jsonDecode(response.body) as Map<String, dynamic>;
+      _nameController.text = '${userData['name']}';
+      _emailController.text = '${userData['email']}';
+      _selectedDate = DateTime.tryParse('${userData['birthday']}' ?? '');
+      if (_selectedDate != null) {
+        _dateController.text =
+            '${_selectedDate!.day}/${_selectedDate!.month}/${_selectedDate!.year}';
+      }
+      return userData;
+    } else {
+      throw Exception('Failed to load user data');
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _userDataFuture = _fetchUserData(token as String);
+    _nameController = TextEditingController();
+    _emailController = TextEditingController();
+    _dateController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    _nameController.dispose();
+    _emailController.dispose();
+    _dateController.dispose();
+    super.dispose();
+  }
+
+  @override
+  void didChangeDependencies() async {
+    super.didChangeDependencies();
+    // Fetch the user data here using the authToken
+    // and update your controllers with the new data
+
+    await _fetchUserData(token as String).then((userData) {
+      setState(() {
+        _nameController.text = '${userData!['name']}';
+        _emailController.text = '${userData!['email']}';
+        _selectedDate = DateTime.tryParse('${userData!['birhday']}' ?? '');
+        if (_selectedDate != null) {
+          _dateController.text =
+              '${_selectedDate!.day}/${_selectedDate!.month}/${_selectedDate!.year}';
+        }
+      });
+    }).catchError((error) {
+      print(error);
+      // Show an error message to the user
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,6 +169,7 @@ class _ProfileDetailsState extends State<ProfileDetails> {
               child: Center(
                 child: TextButton(
                   onPressed: () {
+                    print(token);
                     // Handle the button press here
                   },
                   child: Text(
@@ -208,21 +320,22 @@ class _ProfileDetailsState extends State<ProfileDetails> {
                 width: 358,
                 height: 48,
                 child: ElevatedButton(
-                  onPressed: () {
+                  onPressed: () async {
+                    Map<String, dynamic> updatedUserData = {
+                      'name': _nameController.text,
+                      'email': _emailController.text,
+                      'birthday': _selectedDate?.toIso8601String(),
+                    };
+
+                    // _fetchUserData(token);
+                    // Update the user data
+                    await _updateUserData(updatedUserData);
+                    await _fetchUserData(token as String);
                     // Create the SnackBar with the appropriate colors
                     // Add the SnackBar to display the message
-                    final snackBar = SnackBar(
-                      content: Text('Ваші дані було збережено.',
-                          style: TextStyle(
-                            color: isThemeDark ? darkBG : lightBG,
-                            fontSize: 16,
-                          )),
-                      backgroundColor: isThemeDark ? yellowMain : blueMain,
-                      duration: Duration(seconds: 1),
-                    );
 
                     // Show the SnackBar using the ScaffoldMessenger
-                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+
                     // Navigator.push(
                     //   context,
                     //   MaterialPageRoute(

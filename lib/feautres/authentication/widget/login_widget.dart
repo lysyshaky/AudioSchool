@@ -1,10 +1,21 @@
 import 'package:audio_school/feautres/authentication/view/view.dart';
 import 'package:audio_school/feautres/navigation/nav.dart';
+import 'package:audio_school/feautres/profile/widget/user_status.dart';
 import 'package:audio_school/feautres/theme/theme_data.dart';
 import 'package:flutter/material.dart';
+import 'dart:convert';
+
+import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 import 'package:audio_school/api/api.dart';
 import '../view/register_page.dart';
+
+const API_URL = 'http://localhost:3000/v1';
+// Define userData as a global variable
+Map<String, dynamic> userData = {};
+String? authToken;
+dynamic? token;
 
 class LoginWidget extends StatefulWidget {
   const LoginWidget({Key? key}) : super(key: key);
@@ -17,27 +28,46 @@ class _LoginWidgetState extends State<LoginWidget> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   bool _obscureText = true;
+
   @override
   void initState() {
     super.initState();
     _obscureText = true;
   }
 
+  void setAuthToken(String token) {
+    setState(() {
+      authToken = token;
+    });
+  }
+
   String _errorMessage = '';
   Future<void> _loginUser() async {
-    try {
-      final result =
-          await loginUser(emailController.text, passwordController.text);
+    final email = emailController.text;
+    final password = passwordController.text;
+    final response = await http.post(
+      Uri.parse('$API_URL/auth/login'),
+      body: jsonEncode({'email': email, 'password': password}),
+      headers: {'Content-Type': 'application/json'},
+    );
+    print(response.body);
+    if (response.statusCode == 200) {
+      token = jsonDecode(response.body)['tokens']['access']['token'];
+      print(token);
+
+      userData = await _fetchUserData(token as String);
+      print(userData);
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => NavPage(),
+          builder: (context) =>
+              NavPage(userData: userData as Map<String, dynamic>),
         ),
       );
-    } catch (e) {
-      // setState(() {
-      //   _errorMessage = 'Невірний логін або пароль';
-      // });
+    } else {
+      // Define an initial value for userData
+      Map<String, dynamic> userData = {};
+
       final bool isThemeDark = isDark(context);
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -51,11 +81,22 @@ class _LoginWidgetState extends State<LoginWidget> {
           ),
         ),
       );
-      print('Error: $e');
     }
   }
 
-  @override
+  Future<Map<String, dynamic>> _fetchUserData(String token) async {
+    final response = await http.get(
+      Uri.parse('$API_URL/users/me'),
+      headers: {'Authorization': 'Bearer $token'},
+    );
+
+    if (response.statusCode == 200) {
+      return jsonDecode(response.body) as Map<String, dynamic>;
+    } else {
+      throw Exception('Failed to load user data');
+    }
+  }
+
   Widget build(BuildContext context) {
     final bool isThemeDark = isDark(context);
     return Scaffold(
@@ -181,14 +222,15 @@ class _LoginWidgetState extends State<LoginWidget> {
                     width: 326,
                     height: 48,
                     child: ElevatedButton(
-                      onPressed:
-                          // Navigator.push(
-                          //   context,
-                          //   MaterialPageRoute(
-                          //     builder: (context) => const NavPage(),
-                          //   ),
-                          // );
-                          _loginUser,
+                      onPressed: () {
+                        // Navigator.push(
+                        //   context,
+                        //   MaterialPageRoute(
+                        //     builder: (context) => const NavPage(),
+                        //   ),
+                        // );
+                        _loginUser();
+                      },
                       child: Text(
                         'Увійти',
                         style: TextStyle(
@@ -257,12 +299,15 @@ class _LoginWidgetState extends State<LoginWidget> {
                         padding: const EdgeInsets.all(8),
                         child: ElevatedButton.icon(
                           onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const NavPage(),
-                              ),
-                            );
+                            // Navigator.push(
+                            //   context,
+                            //   MaterialPageRoute(
+                            //     builder: (context) => const NavPage(
+                            //       // user: user,
+                            //       ,
+                            //     ),
+                            //   ),
+                            // );
                           },
                           icon: Icon(
                             Icons.facebook,

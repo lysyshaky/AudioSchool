@@ -2,25 +2,22 @@ import 'package:audio_school/feautres/home/widget/logo_title.dart';
 import 'package:audio_school/feautres/theme/theme_data.dart';
 import 'package:audio_school/feautres/library/view/library_view.dart';
 import 'package:audio_school/feautres/library/widgets/library_text.dart';
-import 'package:audio_school/feautres/profile/widgets/profile_text.dart';
+
 import 'package:flutter/material.dart';
 
+import '../widget/profile_text.dart';
 import 'view.dart';
 
 class ProfilePage extends StatelessWidget {
-  const ProfilePage({
-    super.key,
-  });
+  final Map<String, dynamic> userData;
 
-  // final Widget accountIcon;
+  const ProfilePage({Key? key, required this.userData}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final bool isThemeDark = isDark(context);
     return Scaffold(
-      // // bottomNavigationBar: MyBottomNavigationBar(),
       backgroundColor: isThemeDark ? darkBG : lightBG,
-
       appBar: AppBar(
         automaticallyImplyLeading: false,
         backgroundColor: isThemeDark ? darkBG : lightBG,
@@ -28,8 +25,7 @@ class ProfilePage extends StatelessWidget {
         centerTitle: false,
         title: ProfileText(),
       ),
-
-      body: ProfileView(),
+      body: ProfileView(userData: userData),
     );
   }
 }
