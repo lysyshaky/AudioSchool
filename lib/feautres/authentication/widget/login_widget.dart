@@ -11,11 +11,11 @@ import 'package:http/http.dart' as http;
 import 'package:audio_school/api/api.dart';
 import '../view/register_page.dart';
 
-const API_URL = 'http://localhost:3000/v1';
-// Define userData as a global variable
-Map<String, dynamic> userData = {};
-String? authToken;
-dynamic? token;
+// const API_URL = 'http://localhost:3000/v1';
+// // Define userData as a global variable
+// Map<String, dynamic> userData = {};
+// String? authToken;
+// dynamic? token;
 
 class LoginWidget extends StatefulWidget {
   const LoginWidget({Key? key}) : super(key: key);

@@ -1,4 +1,4 @@
-import 'package:audio_school/feautres/authentication/view/view.dart';
+import 'package:audio_school/feautres/navigation/view/view.dart';
 import 'package:audio_school/feautres/theme/theme_data.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert';
@@ -8,9 +8,13 @@ import 'package:http/http.dart' as http;
 
 import 'package:audio_school/api/api.dart';
 
-import '../../navigation/view/navigation_view.dart';
+import '../view/login_page.dart';
 
-const API_URL = 'http://localhost:3000/v1';
+// const API_URL = 'http://localhost:3000/v1';
+// Define userData as a global variable
+// Map<String, dynamic> userData = {};
+// String? authToken;
+// dynamic? token;
 
 class RegisterWidget extends StatefulWidget {
   const RegisterWidget({Key? key}) : super(key: key);
@@ -30,52 +34,74 @@ class _RegisterWidgetState extends State<RegisterWidget> {
     _obscureText = true;
   }
 
-  Future<void> _register() async {
-    try {
-      final bool isRegistered = await registerUser(
-        _nameController.text,
-        _emailController.text,
-        _passwordController.text,
-      );
-      final email = _emailController.text;
-      final password = _passwordController.text;
-      if (isRegistered) {
-        final response = await http.post(
-          Uri.parse('$API_URL/auth/register'),
-          body: jsonEncode({'email': email, 'password': password}),
-          headers: {'Content-Type': 'application/json'},
-        );
-        if (response.statusCode == 200) {
-          final token = jsonDecode(response.body)['tokens']['access']['token'];
-          print(token);
-          final userData = await _fetchUserData(token as String);
+  void setAuthToken(String token) async {
+    setState(() {
+      authToken = token;
+    });
+    await storage.write(key: "token", value: token);
+  }
 
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) =>
-                  NavPage(userData: userData as Map<String, dynamic>),
-            ),
-          );
-        }
-      } else {
-        final bool isThemeDark = isDark(context);
-        // Show a message or a dialog to indicate the registration was not successful
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            backgroundColor: isThemeDark ? yellowMain : blueMain,
-            content: Text(
-              'Реєстрація не вдалась!',
-              style: TextStyle(
-                color: isThemeDark ? darkBG : lightBG,
-                fontSize: 16,
-              ),
+  Future<void> _registerUser() async {
+    final email = _emailController.text;
+    final password = _passwordController.text;
+    final name = _nameController.text;
+
+    // Check password length
+    if (password.length < 8) {
+      final bool isThemeDark = isDark(context);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          backgroundColor: isThemeDark ? yellowMain : blueMain,
+          content: Text(
+            'Пароль повинен містити принаймні 8 символів.',
+            style: TextStyle(
+              color: isThemeDark ? darkBG : lightBG,
+              fontSize: 16,
             ),
           ),
-        );
-      }
-    } catch (e) {
-      print('Error: $e');
+        ),
+      );
+      return;
+    }
+
+    final response = await http.post(
+      Uri.parse('$API_URL/auth/register'),
+      body: jsonEncode({
+        'email': email,
+        'password': password,
+        'name': name,
+      }),
+      headers: {'Content-Type': 'application/json'},
+    );
+    print(response.body);
+    if (response.statusCode == 201 || response.statusCode == 200) {
+      token = jsonDecode(response.body)['tokens']['access']['token'];
+      print(token);
+
+      userData = await _fetchUserData(token as String);
+      print(userData);
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) =>
+              NavPage(userData: userData as Map<String, dynamic>),
+        ),
+      );
+    } else if (response.statusCode == 400) {
+      final bool isThemeDark = isDark(context);
+      // Email already taken, show a message to the user
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          backgroundColor: isThemeDark ? yellowMain : blueMain,
+          content: Text(
+            'Цей е-мейл вже зареєстровано! Спробуйте інший.',
+            style: TextStyle(
+              color: isThemeDark ? darkBG : lightBG,
+              fontSize: 16,
+            ),
+          ),
+        ),
+      );
     }
   }
 
@@ -221,7 +247,10 @@ class _RegisterWidgetState extends State<RegisterWidget> {
                     width: 326,
                     height: 48,
                     child: ElevatedButton(
-                      onPressed: _register,
+                      onPressed: () {
+                        _registerUser();
+                      },
+
                       // Navigator.push(
                       //   context,
                       //   MaterialPageRoute(

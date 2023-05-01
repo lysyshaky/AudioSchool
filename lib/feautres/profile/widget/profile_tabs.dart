@@ -1,9 +1,11 @@
 import 'package:audio_school/feautres/authentication/view/login_page.dart';
+import 'package:audio_school/feautres/authentication/widget/register_widget.dart';
 import 'package:audio_school/feautres/home/home.dart';
 import 'package:audio_school/feautres/library/widgets/library_book.dart';
 import 'package:audio_school/feautres/profile/profile.dart';
 import 'package:flutter/material.dart';
 
+import '../../../api/api.dart';
 import '../../theme/theme_data.dart';
 
 class ProfileTabs extends StatefulWidget {
@@ -60,6 +62,19 @@ class _ProfileTabsState extends State<ProfileTabs> {
       'routeName': '/logout',
     },
   ];
+  void _logout() {
+    // Clear token and userData
+    authToken = null;
+    token = null;
+    userData = {};
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => LoginPage(),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -73,12 +88,7 @@ class _ProfileTabsState extends State<ProfileTabs> {
               setState(() {
                 _selectedIndex = i;
                 if (_tabs[i]['routeName'] == '/logout') {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => LoginPage(),
-                    ),
-                  );
+                  _logout();
                 } else if (_tabs[i]['routeName'] == '/details') {
                   Navigator.push(
                     context,

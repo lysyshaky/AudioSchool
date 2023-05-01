@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 
 Future<Map<String, dynamic>> loginUser(String email, String password) async {
@@ -68,3 +69,11 @@ Future<Map<String, dynamic>> fetchUserData(String token) async {
     throw Exception('Failed to load user data from API');
   }
 }
+
+final API_URL = 'http://localhost:3000/v1';
+Map<String, dynamic> userData = {};
+String? authToken;
+dynamic? token = '';
+
+// Create storage
+final storage = new FlutterSecureStorage();

@@ -6,6 +6,8 @@ import 'package:audio_school/feautres/theme/theme_data.dart';
 
 import 'package:flutter/material.dart';
 
+import '../../../api/api.dart';
+
 class ProfileDetailsPage extends StatelessWidget {
   const ProfileDetailsPage({
     super.key,

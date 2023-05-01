@@ -1,8 +1,10 @@
+import 'package:audio_school/feautres/authentication/widget/register_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-import '../../authentication/widget/login_widget.dart';
+import '../../../api/api.dart';
+import '../../authentication/widget/login_widget.dart' as ll;
 import '../../theme/theme_data.dart';
 
 class UserStatus extends StatelessWidget {
@@ -22,7 +24,7 @@ class UserStatus extends StatelessWidget {
       headers: {'Authorization': 'Bearer $token'},
     );
 
-    if (response.statusCode == 200) {
+    if (response.statusCode == 200 || response.statusCode == 201) {
       return jsonDecode(response.body) as Map<String, dynamic>;
     } else {
       throw Exception('Failed to load user data');
