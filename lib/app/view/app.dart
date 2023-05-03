@@ -10,9 +10,11 @@ import 'package:audio_school/l10n/l10n.dart';
 import 'package:audio_school/feautres/search/search.dart';
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../../api/api.dart';
 import '../../feautres/authentication/widget/login_widget.dart';
 import '../../feautres/splash/view/splash_page.dart';
+import '../../feautres/theme/data.dart';
 import '../../feautres/theme/theme_data.dart';
 import '../../feautres/library/library.dart';
 
@@ -22,16 +24,19 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isThemeDark = isDark(context);
+    final themeNotifier = Provider.of<ThemeNotifier>(context);
+
     return MaterialApp(
-      theme: ThemeData(
-        appBarTheme: const AppBarTheme(color: Color(0xFF13B9FF)),
-        colorScheme: ColorScheme.fromSwatch(
-          accentColor: const Color(0xFF13B9FF),
-        ),
-        textSelectionTheme: TextSelectionThemeData(
-          selectionColor: yellowMain,
-        ),
-      ),
+      theme: themeNotifier.isDarkTheme ? darkTheme : lightTheme,
+      // theme: ThemeData(
+      //   appBarTheme: const AppBarTheme(color: Color(0xFF13B9FF)),
+      //   colorScheme: ColorScheme.fromSwatch(
+      //     accentColor: const Color(0xFF13B9FF),
+      //   ),
+      //   textSelectionTheme: TextSelectionThemeData(
+      //     selectionColor: yellowMain,
+      //   ),
+      // ),
       routes: {
         NavPage.routeName: (context) => NavPage(userData: userData),
       },

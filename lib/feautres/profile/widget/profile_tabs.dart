@@ -1,12 +1,10 @@
-import 'package:audio_school/feautres/authentication/view/login_page.dart';
-import 'package:audio_school/feautres/authentication/widget/register_widget.dart';
-import 'package:audio_school/feautres/home/home.dart';
-import 'package:audio_school/feautres/library/widgets/library_book.dart';
-import 'package:audio_school/feautres/profile/profile.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../../api/api.dart';
+import '../../authentication/view/login_page.dart';
 import '../../theme/theme_data.dart';
+import '../view/profile_details_page.dart';
 
 class ProfileTabs extends StatefulWidget {
   const ProfileTabs({Key? key}) : super(key: key);
@@ -17,6 +15,8 @@ class ProfileTabs extends StatefulWidget {
 class _ProfileTabsState extends State<ProfileTabs> {
   int _selectedIndex = 0;
   bool _switchValue = false;
+  IconData _darkModeIcon = Icons.nightlight_outlined;
+  String _darkModeText = 'Нічна тема';
 
   final List<Map<String, dynamic>> _tabs = [
     {
@@ -62,6 +62,7 @@ class _ProfileTabsState extends State<ProfileTabs> {
       'routeName': '/logout',
     },
   ];
+
   void _logout() {
     // Clear token and userData
     authToken = null;
@@ -76,10 +77,21 @@ class _ProfileTabsState extends State<ProfileTabs> {
     );
   }
 
+  void _toggleTheme(BuildContext context, bool value) {
+    Provider.of<ThemeNotifier>(context, listen: false).setTheme(value);
+  }
+
   @override
   Widget build(BuildContext context) {
-    final isThemeDark = isDark(context);
-
+    bool isThemeDark = isDark(context);
+    bool _switchValue = Provider.of<ThemeNotifier>(context).isDarkTheme;
+    if (_switchValue) {
+      _darkModeIcon = Icons.light_mode_outlined;
+      _darkModeText = 'Денна тема';
+    } else {
+      _darkModeIcon = Icons.nightlight_outlined;
+      _darkModeText = 'Нічна тема';
+    }
     return Column(
       children: [
         for (int i = 0; i < _tabs.length; i++)
@@ -101,18 +113,15 @@ class _ProfileTabsState extends State<ProfileTabs> {
                 } else if (_tabs[i]['routeName'] == '/team') {
                 } else if (_tabs[i]['routeName'] == '/subscription') {
                 } else {
-                  // Toggle the switch state and change the icon accordingly
                   _switchValue = !_switchValue;
                   if (_switchValue) {
-                    _tabs[i]['icon'] = Icons.light_mode_outlined;
-                    _tabs[i]['text'] = 'Денна тема';
+                    _darkModeIcon = Icons.light_mode_outlined;
+                    _darkModeText = 'Денна тема';
                   } else {
-                    _tabs[i]['icon'] = Icons.nightlight_outlined;
-                    _tabs[i]['text'] = 'Нічна тема';
+                    _darkModeIcon = Icons.nightlight_outlined;
+                    _darkModeText = 'Нічна тема';
                   }
-                  // Update the theme based on the switch state
-                  if (_switchValue) {
-                  } else {}
+                  _toggleTheme(context, _switchValue);
                 }
               });
             },
@@ -123,17 +132,14 @@ class _ProfileTabsState extends State<ProfileTabs> {
             ),
             child: Row(
               children: [
-                // SizedBox(
-                //   height: 30,
-                // ),
                 Icon(
-                  _tabs[i]['icon'] as IconData,
+                  i == 5 ? _darkModeIcon : _tabs[i]['icon'] as IconData,
                   size: 24.0,
                   color: isThemeDark ? yellowMain : blueMain,
                 ),
                 SizedBox(width: 24.0),
                 Text(
-                  _tabs[i]['text'] as String,
+                  i == 5 ? _darkModeText : _tabs[i]['text'] as String,
                   style: TextStyle(
                       fontSize: 18.0,
                       fontWeight: FontWeight.bold,
@@ -153,9 +159,8 @@ class _ProfileTabsState extends State<ProfileTabs> {
                           _tabs[i]['icon'] = Icons.nightlight_outlined;
                           _tabs[i]['text'] = 'Нічна тема';
                         }
-                        if (value) {
-                        } else {}
                       });
+                      _toggleTheme(context, value);
                     },
                     activeColor: isThemeDark ? yellowMain : blueMain,
                   )

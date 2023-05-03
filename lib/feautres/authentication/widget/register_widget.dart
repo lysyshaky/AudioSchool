@@ -165,8 +165,12 @@ class _RegisterWidgetState extends State<RegisterWidget> {
                         TextField(
                           controller: _nameController,
                           cursorColor: isThemeDark ? yellowMain : blueMain,
+                          style: TextStyle(
+                              color: isThemeDark ? darkBG : blueMainDark),
                           decoration: InputDecoration(
                             hintText: 'Ім\'я та прізвище',
+                            hintStyle: TextStyle(
+                                color: isThemeDark ? darkBG : blueMainDark),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(8),
                             ),
@@ -183,8 +187,12 @@ class _RegisterWidgetState extends State<RegisterWidget> {
                         TextField(
                           controller: _emailController,
                           cursorColor: isThemeDark ? yellowMain : blueMain,
+                          style: TextStyle(
+                              color: isThemeDark ? darkBG : blueMainDark),
                           decoration: InputDecoration(
                             hintText: 'Е-мейл',
+                            hintStyle: TextStyle(
+                                color: isThemeDark ? darkBG : blueMainDark),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(8),
                             ),
@@ -204,6 +212,8 @@ class _RegisterWidgetState extends State<RegisterWidget> {
                           child: TextFormField(
                             controller: _passwordController,
                             cursorColor: isThemeDark ? yellowMain : blueMain,
+                            style: TextStyle(
+                                color: isThemeDark ? darkBG : blueMainDark),
                             obscureText: _obscureText,
                             validator: (value) {
                               if (value!.isEmpty && value.length < 8) {
@@ -213,6 +223,8 @@ class _RegisterWidgetState extends State<RegisterWidget> {
                             },
                             decoration: InputDecoration(
                               hintText: 'Пароль',
+                              hintStyle: TextStyle(
+                                  color: isThemeDark ? darkBG : blueMainDark),
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(8),
                               ),

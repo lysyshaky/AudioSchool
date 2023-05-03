@@ -71,8 +71,12 @@ class _ResetCodeWidgetState extends State<ResetCodeWidget> {
                         SizedBox(height: 16),
                         TextField(
                           cursorColor: isThemeDark ? yellowMain : blueMain,
+                          style: TextStyle(
+                              color: isThemeDark ? darkBG : blueMainDark),
                           decoration: InputDecoration(
                             hintText: 'Ввести код',
+                            hintStyle: TextStyle(
+                                color: isThemeDark ? darkBG : blueMainDark),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(8),
                             ),

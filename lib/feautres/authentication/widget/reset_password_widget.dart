@@ -71,8 +71,12 @@ class _ResetPasswordWidgetState extends State<ResetPasswordWidget> {
                         SizedBox(height: 16),
                         TextField(
                           cursorColor: isThemeDark ? yellowMain : blueMain,
+                          style: TextStyle(
+                              color: isThemeDark ? darkBG : blueMainDark),
                           decoration: InputDecoration(
                             hintText: 'Е-мейл',
+                            hintStyle: TextStyle(
+                                color: isThemeDark ? darkBG : blueMainDark),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(8),
                             ),

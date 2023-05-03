@@ -142,8 +142,12 @@ class _LoginWidgetState extends State<LoginWidget> {
                         TextField(
                           controller: emailController,
                           cursorColor: isThemeDark ? yellowMain : blueMain,
+                          style: TextStyle(
+                              color: isThemeDark ? darkBG : blueMainDark),
                           decoration: InputDecoration(
                             hintText: 'Е-мейл',
+                            hintStyle: TextStyle(
+                                color: isThemeDark ? darkBG : blueMainDark),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(8),
                             ),
@@ -163,6 +167,8 @@ class _LoginWidgetState extends State<LoginWidget> {
                           child: TextFormField(
                             controller: passwordController,
                             cursorColor: isThemeDark ? yellowMain : blueMain,
+                            style: TextStyle(
+                                color: isThemeDark ? darkBG : blueMainDark),
                             obscureText: _obscureText,
                             validator: (value) {
                               if (value!.isEmpty) {
@@ -172,6 +178,8 @@ class _LoginWidgetState extends State<LoginWidget> {
                             },
                             decoration: InputDecoration(
                               hintText: 'Пароль',
+                              hintStyle: TextStyle(
+                                  color: isThemeDark ? darkBG : blueMainDark),
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(8),
                               ),
@@ -181,7 +189,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                                 borderRadius: BorderRadius.circular(8),
                               ),
                               filled: true,
-                              fillColor: Colors.white,
+                              fillColor: isThemeDark ? lightBG : lightBG,
                               suffixIcon: IconButton(
                                 icon: Icon(
                                   _obscureText
@@ -270,26 +278,30 @@ class _LoginWidgetState extends State<LoginWidget> {
                     ),
                   ),
                   SizedBox(height: 8),
-                  Row(
-                    children: [
-                      Expanded(
-                          child: Divider(
-                        color: isThemeDark ? greyNavDark : greyNavLight,
-                      )),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16),
-                        child: Text('АБО',
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                              color: isThemeDark ? lightBG : blueMainDark,
-                            )),
-                      ),
-                      Expanded(
-                          child: Divider(
-                        color: isThemeDark ? greyNavDark : greyNavLight,
-                      )),
-                    ],
+                  Padding(
+                    padding: const EdgeInsets.only(
+                        left: 16.0, right: 16.0, bottom: 8),
+                    child: Row(
+                      children: [
+                        Expanded(
+                            child: Divider(
+                          color: isThemeDark ? greyNavDark : greyNavLight,
+                        )),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          child: Text('АБО',
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: isThemeDark ? lightBG : blueMainDark,
+                              )),
+                        ),
+                        Expanded(
+                            child: Divider(
+                          color: isThemeDark ? greyNavDark : greyNavLight,
+                        )),
+                      ],
+                    ),
                   ),
                   SizedBox(height: 8),
                   Column(

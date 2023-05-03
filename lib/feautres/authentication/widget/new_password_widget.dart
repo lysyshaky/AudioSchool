@@ -84,6 +84,8 @@ class _NewPasswordWidgetState extends State<NewPasswordWidget> {
                         child: TextFormField(
                           cursorColor: isThemeDark ? yellowMain : blueMain,
                           obscureText: _obscureText,
+                          style: TextStyle(
+                              color: isThemeDark ? darkBG : blueMainDark),
                           validator: (value) {
                             if (value!.isEmpty) {
                               return 'Будь ласка введіть пароль';
@@ -92,6 +94,8 @@ class _NewPasswordWidgetState extends State<NewPasswordWidget> {
                           },
                           decoration: InputDecoration(
                             hintText: 'Новий пароль',
+                            hintStyle: TextStyle(
+                                color: isThemeDark ? darkBG : blueMainDark),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(8),
                             ),
@@ -125,6 +129,8 @@ class _NewPasswordWidgetState extends State<NewPasswordWidget> {
                         child: TextFormField(
                           cursorColor: isThemeDark ? yellowMain : blueMain,
                           obscureText: _obscureText,
+                          style: TextStyle(
+                              color: isThemeDark ? darkBG : blueMainDark),
                           validator: (value) {
                             if (value!.isEmpty) {
                               return 'Будь ласка введіть пароль';
@@ -133,6 +139,8 @@ class _NewPasswordWidgetState extends State<NewPasswordWidget> {
                           },
                           decoration: InputDecoration(
                             hintText: 'Повторіть пароль',
+                            hintStyle: TextStyle(
+                                color: isThemeDark ? darkBG : blueMainDark),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(8),
                             ),
