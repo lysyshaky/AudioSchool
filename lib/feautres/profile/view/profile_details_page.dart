@@ -30,6 +30,7 @@ class ProfileDetailsPage extends StatelessWidget {
             Navigator.of(context).push(MaterialPageRoute(
                 builder: (context) => NavPage(
                       userData: userData,
+                      apiToken: token as String,
                     )));
           },
         ),

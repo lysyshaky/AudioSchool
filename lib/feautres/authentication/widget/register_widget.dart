@@ -8,6 +8,7 @@ import 'package:http/http.dart' as http;
 
 import 'package:audio_school/api/api.dart';
 
+import '../provider/login_helper.dart';
 import '../view/login_page.dart';
 
 // const API_URL = 'http://localhost:3000/v1';
@@ -80,11 +81,16 @@ class _RegisterWidgetState extends State<RegisterWidget> {
 
       userData = await _fetchUserData(token as String);
       print(userData);
+      await LoginHelper().saveApiToken(token as String);
+
+      await LoginHelper().setIsUserLoggedIn(true);
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) =>
-              NavPage(userData: userData as Map<String, dynamic>),
+          builder: (context) => NavPage(
+            userData: userData as Map<String, dynamic>,
+            apiToken: token as String,
+          ),
         ),
       );
     } else if (response.statusCode == 400) {

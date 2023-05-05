@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../api/api.dart';
+import '../../authentication/provider/login_helper.dart';
 import '../../authentication/view/login_page.dart';
 import '../../theme/theme_data.dart';
 import '../view/profile_details_page.dart';
@@ -63,7 +64,7 @@ class _ProfileTabsState extends State<ProfileTabs> {
     },
   ];
 
-  void _logout() {
+  void _logout() async {
     // Clear token and userData
     authToken = null;
     token = null;
@@ -75,6 +76,8 @@ class _ProfileTabsState extends State<ProfileTabs> {
         builder: (context) => LoginPage(),
       ),
     );
+    await LoginHelper().removeApiToken();
+    await LoginHelper().setIsUserLoggedIn(false);
   }
 
   void _toggleTheme(BuildContext context, bool value) {

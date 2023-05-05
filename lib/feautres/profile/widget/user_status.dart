@@ -8,12 +8,12 @@ import '../../authentication/widget/login_widget.dart' as ll;
 import '../../theme/theme_data.dart';
 
 class UserStatus extends StatelessWidget {
-  final String? authToken;
+  final String authToken;
   final bool isPremium;
 
   UserStatus({
     Key? key,
-    this.authToken,
+    required this.authToken,
     this.isPremium = false,
     required Map<String, dynamic> userData,
   }) : super(key: key);
@@ -21,7 +21,7 @@ class UserStatus extends StatelessWidget {
   Future<Map<String, dynamic>> _fetchUserData(String token) async {
     final response = await http.get(
       Uri.parse('$API_URL/users/me'),
-      headers: {'Authorization': 'Bearer $token'},
+      headers: {'Authorization': 'Bearer $authToken'},
     );
 
     if (response.statusCode == 200 || response.statusCode == 201) {
@@ -35,7 +35,7 @@ class UserStatus extends StatelessWidget {
   Widget build(BuildContext context) {
     final bool isThemeDark = isDark(context);
     return FutureBuilder<Map<String, dynamic>>(
-      future: _fetchUserData(token as String),
+      future: _fetchUserData(authToken),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           if (snapshot.hasError) {

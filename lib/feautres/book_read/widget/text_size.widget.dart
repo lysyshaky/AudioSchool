@@ -75,7 +75,11 @@ class TextSizeWidget extends StatelessWidget {
                         // Implement functionality for the minus button
                       },
                       padding: EdgeInsets.all(0),
-                      icon: Icon(Icons.remove, size: 24),
+                      icon: Icon(
+                        Icons.remove,
+                        size: 24,
+                        color: isThemeDark ? darkBG : darkBG,
+                      ),
                     ),
                   ),
                   SizedBox(width: 16),
@@ -91,7 +95,11 @@ class TextSizeWidget extends StatelessWidget {
                         // Implement functionality for the plus button
                       },
                       padding: EdgeInsets.all(0),
-                      icon: Icon(Icons.add, size: 24),
+                      icon: Icon(
+                        Icons.add,
+                        size: 24,
+                        color: isThemeDark ? darkBG : darkBG,
+                      ),
                     ),
                   ),
                 ],

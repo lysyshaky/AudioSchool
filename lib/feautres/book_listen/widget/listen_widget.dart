@@ -137,12 +137,7 @@ class _PlayScreenState extends State<PlayScreen> with WidgetsBindingObserver {
             size: 36,
           ),
           onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => NavPage(userData: userData),
-              ),
-            );
+            Navigator.popUntil(context, (route) => route.isFirst);
           },
         ),
         elevation: 0,

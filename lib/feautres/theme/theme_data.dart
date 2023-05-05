@@ -23,7 +23,7 @@ class ThemeNotifier extends ChangeNotifier {
   SharedPreferences? _pref;
   bool _isDarkTheme;
 
-  ThemeNotifier(this._isDarkTheme) {
+  ThemeNotifier(bool isDarkTheme) : _isDarkTheme = isDarkTheme {
     _loadFromPrefs();
   }
 
@@ -31,6 +31,13 @@ class ThemeNotifier extends ChangeNotifier {
 
   void setTheme(bool isDarkTheme) {
     _isDarkTheme = isDarkTheme;
+    _saveToPrefs();
+    notifyListeners();
+  }
+
+  void setDarkTheme(bool value) {
+    _isDarkTheme = value;
+    _saveToPrefs();
     notifyListeners();
   }
 

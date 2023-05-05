@@ -11,8 +11,10 @@ int _currentIndex = 0;
 class NavPage extends StatefulWidget {
   static const routeName = '/navPage';
   final Map<String, dynamic> userData;
+  final String apiToken;
 
-  const NavPage({Key? key, required this.userData}) : super(key: key);
+  const NavPage({Key? key, required this.userData, required this.apiToken})
+      : super(key: key);
 
   @override
   _NavPageState createState() => _NavPageState();
@@ -23,7 +25,7 @@ class _NavPageState extends State<NavPage> {
     HomePage(),
     SearchPage(),
     LibraryPage(),
-    ProfilePage(userData: widget.userData),
+    ProfilePage(userData: widget.userData, authToken: widget.apiToken),
   ];
 
   void onTabTapped(int index) {

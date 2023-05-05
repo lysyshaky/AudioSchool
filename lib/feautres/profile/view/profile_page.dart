@@ -10,8 +10,10 @@ import 'view.dart';
 
 class ProfilePage extends StatelessWidget {
   final Map<String, dynamic> userData;
+  final String authToken;
 
-  const ProfilePage({Key? key, required this.userData}) : super(key: key);
+  const ProfilePage({Key? key, required this.userData, required this.authToken})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +27,7 @@ class ProfilePage extends StatelessWidget {
         centerTitle: false,
         title: ProfileText(),
       ),
-      body: ProfileView(userData: userData),
+      body: ProfileView(userData: userData, authToken: authToken),
     );
   }
 }

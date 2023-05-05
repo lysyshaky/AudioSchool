@@ -10,8 +10,10 @@ import '../widget/user_status.dart';
 
 class ProfileView extends StatelessWidget {
   final Map<String, dynamic> userData;
+  final String authToken;
 
-  const ProfileView({Key? key, required this.userData}) : super(key: key);
+  const ProfileView({Key? key, required this.userData, required this.authToken})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +21,10 @@ class ProfileView extends StatelessWidget {
     return SingleChildScrollView(
       child: Column(
         children: [
-          UserStatus(userData: userData),
+          UserStatus(
+            userData: userData,
+            authToken: authToken, // Use authToken instead of token
+          ),
           Padding(
             padding: EdgeInsets.all(16.0),
             child: Divider(

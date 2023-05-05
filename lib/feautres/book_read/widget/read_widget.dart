@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:audio_school/api/api.dart';
+import '../../audio/view/audio.dart';
 import '../../book_details/view/book_details_page.dart';
 import '../../theme/theme_data.dart';
 
@@ -37,6 +38,17 @@ class ReadScreen extends StatefulWidget {
 }
 
 class _ReadScreenState extends State<ReadScreen> with WidgetsBindingObserver {
+  bool _showMiniPlayer = false;
+  IconData _playIcon = Icons.play_arrow_rounded;
+
+  void _toggleMiniPlayer() {
+    setState(() {
+      _showMiniPlayer = !_showMiniPlayer;
+      _playIcon =
+          _showMiniPlayer ? Icons.close_rounded : Icons.play_arrow_rounded;
+    });
+  }
+
   Future<void> _loginUser() async {
     final response = await http.post(
       Uri.parse('$API_URL/auth/login'),
@@ -49,13 +61,6 @@ class _ReadScreenState extends State<ReadScreen> with WidgetsBindingObserver {
       print(token);
       final userData = await _fetchUserData(token as String);
       print("READ:$userData");
-      // Navigator.push(
-      //   context,
-      //   MaterialPageRoute(
-      //     builder: (context) =>
-      //         NavPage(userData: userData as Map<String, dynamic>),
-      //   ),
-      // );
     } else {
       // Define an initial value for userData
     }
@@ -74,19 +79,11 @@ class _ReadScreenState extends State<ReadScreen> with WidgetsBindingObserver {
     }
   }
 
-  void _navigateBackTwice(BuildContext context) {
-    if (Navigator.canPop(context)) {
-      Navigator.pop(context); // Pop the first page
-    }
-    if (Navigator.canPop(context)) {
-      Navigator.pop(context); // Pop the second page
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     final bool isThemeDark = isDark(context);
     return Scaffold(
+      bottomNavigationBar: _showMiniPlayer ? MiniPlayer() : null,
       backgroundColor: isThemeDark ? darkBG : lightBG,
       appBar: AppBar(
         iconTheme: IconThemeData(
@@ -98,12 +95,7 @@ class _ReadScreenState extends State<ReadScreen> with WidgetsBindingObserver {
             size: 36,
           ),
           onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => NavPage(userData: userData),
-              ),
-            );
+            Navigator.popUntil(context, (route) => route.isFirst);
           },
         ),
         elevation: 0,
@@ -146,9 +138,9 @@ class _ReadScreenState extends State<ReadScreen> with WidgetsBindingObserver {
             },
           ),
           IconButton(
-            icon: Icon(Icons.play_arrow_rounded,
-                color: isThemeDark ? lightBG : blueMainDark),
+            icon: Icon(_playIcon, color: isThemeDark ? lightBG : blueMainDark),
             onPressed: () {
+              _toggleMiniPlayer();
               // Implement your functionality for showing text here.
             },
           ),
