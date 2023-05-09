@@ -51,7 +51,7 @@ class _NewPasswordWidgetState extends State<NewPasswordWidget> {
           ),
           SizedBox(height: 16),
           Container(
-            height: MediaQuery.of(context).size.height * 0.45,
+            height: MediaQuery.of(context).size.height * 0.50,
             decoration: BoxDecoration(
               color: isThemeDark ? Color(0xff313333) : greyLight,
               borderRadius: BorderRadius.circular(12),

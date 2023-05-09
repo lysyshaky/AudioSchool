@@ -451,7 +451,7 @@ class _BookDetailsPopupState extends State<BookDetailsPopup> {
                 ),
                 SizedBox(height: 0),
                 BookSimilar(),
-                SizedBox(height: 16),
+                SizedBox(height: 36),
               ],
             ),
           ),

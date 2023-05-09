@@ -11,6 +11,7 @@ import 'package:http/http.dart' as http;
 
 import 'package:audio_school/api/api.dart';
 import '../../audio/view/audio.dart';
+import '../../authentication/provider/login_helper.dart';
 import '../../book_details/view/book_details_page.dart';
 import '../../theme/theme_data.dart';
 
@@ -79,6 +80,28 @@ class _ReadScreenState extends State<ReadScreen> with WidgetsBindingObserver {
     }
   }
 
+  Future<void> _loadData() async {
+    final isLoggedIn = await LoginHelper().getIsUserLoggedIn();
+    if (isLoggedIn) {
+      final token = await LoginHelper().getApiToken();
+      if (token != null) {
+        final fetchedUserData = await _fetchUserData(token);
+        setState(() {
+          userData = fetchedUserData;
+        });
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => NavPage(
+              userData: userData!,
+              apiToken: token!,
+            ),
+          ),
+        );
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final bool isThemeDark = isDark(context);
@@ -95,7 +118,7 @@ class _ReadScreenState extends State<ReadScreen> with WidgetsBindingObserver {
             size: 36,
           ),
           onPressed: () {
-            Navigator.popUntil(context, (route) => route.isFirst);
+            _loadData();
           },
         ),
         elevation: 0,

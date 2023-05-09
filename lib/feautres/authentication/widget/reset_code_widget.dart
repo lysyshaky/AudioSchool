@@ -48,7 +48,7 @@ class _ResetCodeWidgetState extends State<ResetCodeWidget> {
           ),
           SizedBox(height: 16),
           Container(
-            height: MediaQuery.of(context).size.height * 0.38,
+            height: MediaQuery.of(context).size.height * 0.40,
             child: Container(
               decoration: BoxDecoration(
                 color: isThemeDark ? Color(0xff313333) : greyLight,

@@ -349,7 +349,17 @@ class _LoginWidgetState extends State<LoginWidget> {
                       Padding(
                         padding: const EdgeInsets.all(8),
                         child: ElevatedButton.icon(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => NavPage(
+                                  apiToken: '',
+                                  userData: {},
+                                ),
+                              ),
+                            );
+                          },
                           icon: Icon(
                             Icons.abc,
                             color: isThemeDark ? darkBG : lightBG,
@@ -396,7 +406,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                       ),
                     ],
                   ),
-                  SizedBox(height: 8),
+                  SizedBox(height: 0),
                   TextButton(
                     onPressed: () {
                       Navigator.push(

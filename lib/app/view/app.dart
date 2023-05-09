@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:animated_splash_screen/animated_splash_screen.dart';
+import 'package:audio_service/audio_service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -71,19 +72,21 @@ class _AppState extends State<App> {
       homeWidget = LoginPage();
     }
 
-    return MaterialApp(
-      theme: currentTheme,
-      debugShowCheckedModeBanner: false,
-      localizationsDelegates: AppLocalizations.localizationsDelegates,
-      supportedLocales: AppLocalizations.supportedLocales,
-      home: AnimatedSplashScreen(
-        duration: 1000,
-        nextScreen: homeWidget,
-        splash: const SplashPage(),
-        splashTransition: SplashTransition.fadeTransition,
-        backgroundColor: themeNotifier.isDarkTheme ? lightBG : darkBG,
+    return AudioServiceWidget(
+      child: MaterialApp(
+        theme: currentTheme,
+        debugShowCheckedModeBanner: false,
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
+        home: AnimatedSplashScreen(
+          duration: 1000,
+          nextScreen: homeWidget,
+          splash: const SplashPage(),
+          splashTransition: SplashTransition.fadeTransition,
+          backgroundColor: themeNotifier.isDarkTheme ? lightBG : darkBG,
+        ),
+        onGenerateRoute: (_) => SplashPage.route(),
       ),
-      onGenerateRoute: (_) => SplashPage.route(),
     );
   }
 }

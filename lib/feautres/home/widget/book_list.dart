@@ -1,5 +1,6 @@
 import 'package:audio_school/feautres/book_details/book_details.dart';
 import 'package:audio_school/feautres/book_details/widget/book_details_widget.dart';
+import 'package:audio_school/feautres/home/widget/show_all.dart';
 import 'package:audio_school/feautres/theme/theme_data.dart';
 import 'package:flutter/material.dart';
 
@@ -65,7 +66,15 @@ class BookList extends StatelessWidget {
                 ),
               ),
               GestureDetector(
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          AllBooksPage(bookTitle: 'Історія України'),
+                    ),
+                  );
+                },
                 child: Row(
                   children: [
                     Text(

@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:audio_school/feautres/book_listen/widget/common.dart';
+import 'package:audio_school/feautres/book_listen/widget/text_widget.dart';
 import 'package:audio_school/feautres/book_read/view/read_page.dart';
 import 'package:audio_school/feautres/home/home.dart';
 import 'package:audio_school/feautres/navigation/nav.dart';
@@ -11,10 +14,12 @@ import 'package:just_audio/just_audio.dart';
 import 'dart:ui' as ui;
 
 import 'package:rxdart/rxdart.dart';
-
+import 'package:http/http.dart' as http;
 import '../../../api/api.dart';
+import '../../authentication/provider/login_helper.dart';
 import '../../authentication/widget/login_widget.dart';
 import '../../theme/theme_data.dart';
+import 'controll_buttons.dart';
 
 int index = 0;
 final List<Map<String, String>> books = [
@@ -124,6 +129,41 @@ class _PlayScreenState extends State<PlayScreen> with WidgetsBindingObserver {
       });
     }
 
+    Future<Map<String, dynamic>> _fetchUserData(String token) async {
+      final response = await http.get(
+        Uri.parse('$API_URL/users/me'),
+        headers: {'Authorization': 'Bearer $token'},
+      );
+
+      if (response.statusCode == 200) {
+        return jsonDecode(response.body) as Map<String, dynamic>;
+      } else {
+        throw Exception('Failed to load user data');
+      }
+    }
+
+    Future<void> _loadData() async {
+      final isLoggedIn = await LoginHelper().getIsUserLoggedIn();
+      if (isLoggedIn) {
+        final token = await LoginHelper().getApiToken();
+        if (token != null) {
+          final fetchedUserData = await _fetchUserData(token);
+          setState(() {
+            userData = fetchedUserData;
+          });
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => NavPage(
+                userData: userData!,
+                apiToken: token!,
+              ),
+            ),
+          );
+        }
+      }
+    }
+
     final bool isThemeDark = isDark(context);
     return Scaffold(
       backgroundColor: isThemeDark ? darkBG : lightBG,
@@ -137,7 +177,8 @@ class _PlayScreenState extends State<PlayScreen> with WidgetsBindingObserver {
             size: 36,
           ),
           onPressed: () {
-            Navigator.popUntil(context, (route) => route.isFirst);
+            //make it faster
+            _loadData();
           },
         ),
         elevation: 0,
@@ -298,207 +339,6 @@ class _PlayScreenState extends State<PlayScreen> with WidgetsBindingObserver {
           ],
         ),
       ),
-    );
-  }
-}
-
-class TextContainer extends StatefulWidget {
-  final VoidCallback onClose;
-  TextContainer({required this.onClose});
-  @override
-  _TextContainerState createState() => _TextContainerState();
-}
-
-class _TextContainerState extends State<TextContainer> {
-  @override
-  Widget build(BuildContext context) {
-    final bool isThemeDark = isDark(context);
-    return Container(
-      decoration: BoxDecoration(
-        color: isThemeDark ? blueMainDark : blueMain.withOpacity(0.2),
-        borderRadius: BorderRadius.circular(12), // Set border radius here
-      ),
-
-      // Container attributes such as padding, color, etc.
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                Text(
-                  'Читання',
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                    color: isThemeDark ? lightBG : blueMainDark,
-                  ),
-                  // Style for the header
-                ),
-                Spacer(),
-                IconButton(
-                  icon: Icon(Icons.close,
-                      color: isThemeDark ? lightBG : blueMainDark),
-                  onPressed: widget.onClose,
-                ),
-              ],
-            ),
-            SizedBox(height: 8),
-            Text(
-              '''Далеко далеко, за горами слова, далеко від країн Vokalia і Consonantia живуть сліпі тексти. Розділені вони живуть у Bookmarksgrove прямо на узбережжі Семантики, великого мовного океану. Невелика річка на ім'я Дуден протікає біля їхнього місця і постачає його необхідними регеліяліями. Це райська країна, в якій засмажені частини речень летять до рота.''',
-              // Style for the text
-              style: TextStyle(
-                fontSize: 16,
-                color: isThemeDark ? lightBG : blueMainDark,
-              ),
-              // Your text color),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-// Displays the play/pause button and volume/speed sliders.
-class ControlButtons extends StatelessWidget {
-  final AudioPlayer player;
-
-  const ControlButtons(this.player, {Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    final bool isThemeDark = isDark(context);
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        // Opens volume slider dialog
-        // PopupMenuButton<double>(
-        //   icon: Icon(Icons.volume_up, color: isThemeDark ? lightBG : darkBG),
-        //   onSelected: (double value) {
-        //     player.setVolume(value);
-        //   },
-        //   itemBuilder: (BuildContext context) {
-        //     return List<PopupMenuEntry<double>>.generate(
-        //       6,
-        //       (int index) => PopupMenuItem<double>(
-        //         value: index / 10,
-        //         child: Text("Гучнісь: ${index * 20}%"),
-        //       ),
-        //     );
-        //   },
-        // ),
-        SizedBox(width: 36),
-
-        StreamBuilder<SequenceState?>(
-          stream: player.sequenceStateStream,
-          builder: (context, snapshot) => IconButton(
-            icon: Icon(Icons.skip_previous_rounded,
-                color: isThemeDark ? lightBG : blueMainDark),
-            onPressed: player.hasPrevious ? player.seekToPrevious : null,
-            iconSize: 48.0,
-          ),
-        ),
-
-        /// This StreamBuilder rebuilds whenever the player state changes, which
-        /// includes the playing/paused state and also the
-        /// loading/buffering/ready state. Depending on the state we show the
-        /// appropriate button or loading indicator.
-        StreamBuilder<PlayerState>(
-          stream: player.playerStateStream,
-          builder: (context, snapshot) {
-            final playerState = snapshot.data;
-            final processingState = playerState?.processingState;
-            final playing = playerState?.playing;
-
-            if (processingState == ProcessingState.loading ||
-                processingState == ProcessingState.buffering) {
-              return Container(
-                margin: const EdgeInsets.all(8.0),
-                width: 64.0,
-                height: 64.0,
-                child: CircularProgressIndicator(
-                  color: isThemeDark ? yellowMain : blueMain,
-                ),
-              );
-              //   else if () {
-              //   return IconButton(
-              //     icon: const Icon(Icons.skip_next_rounded, color: Colors.white),
-              //     iconSize: 64.0,
-              //     onPressed: player.play,
-              //   );
-              // } else if () {
-              //   return IconButton(
-              //     icon: const Icon(Icons.skip_previous_rounded,
-              //         color: Colors.white),
-              //     iconSize: 64.0,
-              //     onPressed: player.play,
-              //   );
-              // }
-            } else if (playing != true) {
-              return IconButton(
-                icon: Icon(Icons.play_arrow_rounded,
-                    color: isThemeDark ? lightBG : darkBG),
-                iconSize: 64.0,
-                onPressed: player.play,
-              );
-            } else if (processingState != ProcessingState.completed) {
-              return IconButton(
-                icon: Icon(Icons.pause_rounded,
-                    color: isThemeDark ? lightBG : blueMainDark),
-                iconSize: 64.0,
-                onPressed: player.pause,
-              );
-            } else {
-              return IconButton(
-                icon: Icon(Icons.replay,
-                    color: isThemeDark ? lightBG : blueMainDark),
-                iconSize: 64.0,
-                onPressed: () => player.seek(Duration.zero),
-              );
-            }
-          },
-        ),
-        StreamBuilder<SequenceState?>(
-          stream: player.sequenceStateStream,
-          builder: (context, snapshot) => IconButton(
-            icon: Icon(
-              Icons.skip_next_rounded,
-              color: isThemeDark ? lightBG : blueMainDark,
-            ),
-            iconSize: 48.0,
-            onPressed: player.hasNext ? player.seekToNext : null,
-          ),
-        ),
-        SizedBox(width: 30),
-        // Opens speed slider dialog
-        PopupMenuButton<double>(
-          child: StreamBuilder<double>(
-            stream: player.speedStream,
-            builder: (context, snapshot) => Text(
-              "${snapshot.data?.toStringAsFixed(1)}x",
-              style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: isThemeDark ? lightBG : blueMainDark),
-            ),
-          ),
-          onSelected: (double value) {
-            player.setSpeed(value);
-          },
-          itemBuilder: (BuildContext context) {
-            return List<PopupMenuEntry<double>>.generate(
-              4,
-              (int index) => PopupMenuItem<double>(
-                value: 0.5 * (index + 1),
-                child: Text(
-                    "Швидкість: ${(0.5 * (index + 1)).toStringAsFixed(1)}x"),
-              ),
-            );
-          },
-        ),
-      ],
     );
   }
 }

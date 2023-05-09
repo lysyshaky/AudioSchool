@@ -54,7 +54,7 @@ class _RegisterWidgetState extends State<RegisterWidget> {
         SnackBar(
           backgroundColor: isThemeDark ? yellowMain : blueMain,
           content: Text(
-            'Пароль повинен містити принаймні 8 символів.',
+            'Пароль повинен містити принаймні 8 символів, де є букви та цифри.',
             style: TextStyle(
               color: isThemeDark ? darkBG : lightBG,
               fontSize: 16,
@@ -155,7 +155,7 @@ class _RegisterWidgetState extends State<RegisterWidget> {
           ),
           SizedBox(height: 16),
           Container(
-            height: MediaQuery.of(context).size.height * 0.55,
+            height: MediaQuery.of(context).size.height * 0.60,
             child: Container(
               decoration: BoxDecoration(
                 color: isThemeDark ? Color(0xff313333) : greyLight,
