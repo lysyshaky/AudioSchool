@@ -20,7 +20,7 @@ dependencies:
   hive_flutter: ^1.1.0
   retrofit: ^4.0.1
   retrofit_generator: ^6.0.0+1
-  formz: ^0.4.1
+  formz: ^0.6.0
   google_fonts: ^4.0.3
   http: ^0.13.5
   hydrated_bloc: ^9.1.0
