@@ -129,106 +129,53 @@ class _RegisterWidgetState extends State<RegisterWidget> {
     final bool isThemeDark = isDark(context);
     return Scaffold(
       backgroundColor: isThemeDark ? darkBG : lightBG,
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          SizedBox(height: 0),
-          Center(
-            child: Container(
-              alignment: Alignment.center,
-              width: 320,
-              height: 70,
-              child: isThemeDark
-                  ? const Image(
-                      image: AssetImage('assets/images/logo-dark.png'))
-                  : const Image(image: AssetImage('assets/images/logo.png')),
-            ),
-          ),
-          SizedBox(height: 16),
-          Text(
-            'Реєстрація',
-            style: TextStyle(
-                color: isThemeDark ? lightBG : blueMainDark,
-                fontSize: 32,
-                fontWeight: FontWeight.bold),
-            textAlign: TextAlign.left,
-          ),
-          SizedBox(height: 16),
-          Container(
-            height: MediaQuery.of(context).size.height * 0.60,
-            child: Container(
-              decoration: BoxDecoration(
-                color: isThemeDark ? Color(0xff313333) : greyLight,
-                borderRadius: BorderRadius.circular(12),
+      body: ListView(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          // child: Column(crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(height: 0),
+            Center(
+              child: Container(
+                alignment: Alignment.center,
+                width: 320,
+                height: 70,
+                child: isThemeDark
+                    ? const Image(
+                        image: AssetImage('assets/images/logo-dark.png'))
+                    : const Image(image: AssetImage('assets/images/logo.png')),
               ),
-              child: Column(
-                children: [
-                  SizedBox(height: 24),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    child: Column(
-                      children: [
-                        TextField(
-                          controller: _nameController,
-                          cursorColor: isThemeDark ? yellowMain : blueMain,
-                          style: TextStyle(
-                              color: isThemeDark ? darkBG : blueMainDark),
-                          decoration: InputDecoration(
-                            hintText: 'Ім\'я та прізвище',
-                            hintStyle: TextStyle(
-                                color: isThemeDark ? darkBG : blueMainDark),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: isThemeDark ? yellowMain : blueMain),
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            filled: true,
-                            fillColor: Colors.white,
-                          ),
-                        ),
-                        SizedBox(height: 16),
-                        TextField(
-                          controller: _emailController,
-                          cursorColor: isThemeDark ? yellowMain : blueMain,
-                          style: TextStyle(
-                              color: isThemeDark ? darkBG : blueMainDark),
-                          decoration: InputDecoration(
-                            hintText: 'Е-мейл',
-                            hintStyle: TextStyle(
-                                color: isThemeDark ? darkBG : blueMainDark),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: isThemeDark ? yellowMain : blueMain),
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            filled: true,
-                            fillColor: Colors.white,
-                          ),
-                        ),
-                        SizedBox(height: 16),
-                        Theme(
-                          data: Theme.of(context)
-                              .copyWith(accentColor: yellowMain),
-                          child: TextFormField(
-                            controller: _passwordController,
+            ),
+            SizedBox(height: 16),
+            Text(
+              'Реєстрація',
+              style: TextStyle(
+                  color: isThemeDark ? lightBG : blueMainDark,
+                  fontSize: 32,
+                  fontWeight: FontWeight.bold),
+              textAlign: TextAlign.left,
+            ),
+            SizedBox(height: 16),
+            Container(
+              height: MediaQuery.of(context).size.height * 0.55,
+              child: Container(
+                decoration: BoxDecoration(
+                  color: isThemeDark ? Color(0xff313333) : greyLight,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Column(
+                  children: [
+                    SizedBox(height: 24),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      child: Column(
+                        children: [
+                          TextField(
+                            controller: _nameController,
                             cursorColor: isThemeDark ? yellowMain : blueMain,
                             style: TextStyle(
                                 color: isThemeDark ? darkBG : blueMainDark),
-                            obscureText: _obscureText,
-                            validator: (value) {
-                              if (value!.isEmpty && value.length < 8) {
-                                return 'Пароль повинен бути не менше 8 символів';
-                              }
-                              return null;
-                            },
                             decoration: InputDecoration(
-                              hintText: 'Пароль',
+                              hintText: 'Ім\'я та прізвище',
                               hintStyle: TextStyle(
                                   color: isThemeDark ? darkBG : blueMainDark),
                               border: OutlineInputBorder(
@@ -241,134 +188,188 @@ class _RegisterWidgetState extends State<RegisterWidget> {
                               ),
                               filled: true,
                               fillColor: Colors.white,
-                              suffixIcon: IconButton(
-                                icon: Icon(
-                                  _obscureText
-                                      ? Icons.visibility_off
-                                      : Icons.visibility,
-                                  color: isThemeDark ? yellowMain : blueMain,
-                                ),
-                                onPressed: () {
-                                  setState(() {
-                                    _obscureText = !_obscureText;
-                                  });
-                                },
-                              ),
                             ),
                           ),
-                        )
-                      ],
+                          SizedBox(height: 16),
+                          TextField(
+                            controller: _emailController,
+                            cursorColor: isThemeDark ? yellowMain : blueMain,
+                            style: TextStyle(
+                                color: isThemeDark ? darkBG : blueMainDark),
+                            decoration: InputDecoration(
+                              hintText: 'Е-мейл',
+                              hintStyle: TextStyle(
+                                  color: isThemeDark ? darkBG : blueMainDark),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: isThemeDark ? yellowMain : blueMain),
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              filled: true,
+                              fillColor: Colors.white,
+                            ),
+                          ),
+                          SizedBox(height: 16),
+                          Theme(
+                            data: Theme.of(context)
+                                .copyWith(accentColor: yellowMain),
+                            child: TextFormField(
+                              controller: _passwordController,
+                              cursorColor: isThemeDark ? yellowMain : blueMain,
+                              style: TextStyle(
+                                  color: isThemeDark ? darkBG : blueMainDark),
+                              obscureText: _obscureText,
+                              validator: (value) {
+                                if (value!.isEmpty && value.length < 8) {
+                                  return 'Пароль повинен бути не менше 8 символів';
+                                }
+                                return null;
+                              },
+                              decoration: InputDecoration(
+                                hintText: 'Пароль',
+                                hintStyle: TextStyle(
+                                    color: isThemeDark ? darkBG : blueMainDark),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color:
+                                          isThemeDark ? yellowMain : blueMain),
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                filled: true,
+                                fillColor: Colors.white,
+                                suffixIcon: IconButton(
+                                  icon: Icon(
+                                    _obscureText
+                                        ? Icons.visibility_off
+                                        : Icons.visibility,
+                                    color: isThemeDark ? yellowMain : blueMain,
+                                  ),
+                                  onPressed: () {
+                                    setState(() {
+                                      _obscureText = !_obscureText;
+                                    });
+                                  },
+                                ),
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
                     ),
-                  ),
-                  SizedBox(height: 16),
-                  SizedBox(
-                    width: 326,
-                    height: 48,
-                    child: ElevatedButton(
+                    SizedBox(height: 16),
+                    SizedBox(
+                      width: 326,
+                      height: 48,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          _registerUser();
+                        },
+
+                        // Navigator.push(
+                        //   context,
+                        //   MaterialPageRoute(
+                        //     builder: (context) => const NavPage(),
+                        //   ),
+                        // );
+
+                        child: Text(
+                          'Створити обліковий запис',
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            color: isThemeDark ? darkBG : lightBG,
+                          ),
+                        ),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: isThemeDark ? yellowMain : blueMain,
+                          minimumSize: Size(326, 48),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 8),
+                    Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Center(
+                        child: RichText(
+                          text: TextSpan(
+                            text:
+                                'Вибираючи Створити обліковий запис нижче, я погоджуюся з ',
+                            style: isThemeDark
+                                ? TextStyle(color: lightBG)
+                                : TextStyle(color: blueMainDark),
+                            children: <TextSpan>[
+                              TextSpan(
+                                text: 'Умовами обслуговування',
+                                style: TextStyle(
+                                    color: isThemeDark ? yellowMain : blueMain,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              TextSpan(
+                                text: ' та ',
+                                style: isThemeDark
+                                    ? TextStyle(color: lightBG)
+                                    : TextStyle(color: blueMainDark),
+                              ),
+                              TextSpan(
+                                text: 'Політикою конфіденційності',
+                                style: TextStyle(
+                                    color: isThemeDark ? yellowMain : blueMain,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              TextSpan(
+                                text: '.',
+                                style: isThemeDark
+                                    ? TextStyle(color: lightBG)
+                                    : TextStyle(color: blueMainDark),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                    TextButton(
                       onPressed: () {
-                        _registerUser();
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const LoginPage(),
+                          ),
+                        );
                       },
-
-                      // Navigator.push(
-                      //   context,
-                      //   MaterialPageRoute(
-                      //     builder: (context) => const NavPage(),
-                      //   ),
-                      // );
-
-                      child: Text(
-                        'Створити обліковий запис',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: isThemeDark ? darkBG : lightBG,
-                        ),
-                      ),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: isThemeDark ? yellowMain : blueMain,
-                        minimumSize: Size(326, 48),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 8),
-                  Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Center(
                       child: RichText(
                         text: TextSpan(
-                          text:
-                              'Вибираючи Створити обліковий запис нижче, я погоджуюся з ',
-                          style: isThemeDark
-                              ? TextStyle(color: lightBG)
-                              : TextStyle(color: blueMainDark),
+                          text: 'Вже є аккаунт? ',
+                          style: TextStyle(
+                            color: isThemeDark ? lightBG : blueMainDark,
+                            fontSize: 14,
+                          ),
                           children: <TextSpan>[
                             TextSpan(
-                              text: 'Умовами обслуговування',
+                              text: 'Авторизуватися',
                               style: TextStyle(
                                   color: isThemeDark ? yellowMain : blueMain,
+                                  fontSize: 14,
                                   fontWeight: FontWeight.bold),
-                            ),
-                            TextSpan(
-                              text: ' та ',
-                              style: isThemeDark
-                                  ? TextStyle(color: lightBG)
-                                  : TextStyle(color: blueMainDark),
-                            ),
-                            TextSpan(
-                              text: 'Політикою конфіденційності',
-                              style: TextStyle(
-                                  color: isThemeDark ? yellowMain : blueMain,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                            TextSpan(
-                              text: '.',
-                              style: isThemeDark
-                                  ? TextStyle(color: lightBG)
-                                  : TextStyle(color: blueMainDark),
                             ),
                           ],
                         ),
                       ),
-                    ),
-                  ),
-                  SizedBox(height: 16),
-                  TextButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const LoginPage(),
-                        ),
-                      );
-                    },
-                    child: RichText(
-                      text: TextSpan(
-                        text: 'Вже є аккаунт? ',
-                        style: TextStyle(
-                          color: isThemeDark ? lightBG : blueMainDark,
-                          fontSize: 14,
-                        ),
-                        children: <TextSpan>[
-                          TextSpan(
-                            text: 'Авторизуватися',
-                            style: TextStyle(
-                                color: isThemeDark ? yellowMain : blueMain,
-                                fontSize: 14,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ],
-                      ),
-                    ),
-                  )
-                ],
+                    )
+                  ],
+                ),
               ),
             ),
-          ),
-        ]),
-      ),
+          ]),
+      // ),
     );
   }
 }

@@ -65,7 +65,7 @@ class LibraryPage extends StatelessWidget {
                 physics: const ClampingScrollPhysics(),
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
-                  childAspectRatio: 0.58,
+                  childAspectRatio: 0.57,
                 ),
                 itemCount: books.length,
                 itemBuilder: (BuildContext context, int index) {

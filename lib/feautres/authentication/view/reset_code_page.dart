@@ -33,7 +33,7 @@ class ResetCodePage extends StatelessWidget {
         ),
       ),
       // drawer: AppDrawer(),
-      body: NewPasswordView(),
+      body: ResetCodeView(),
     );
   }
 }

@@ -45,6 +45,5 @@ post_install do |installer|
         'AUDIO_SESSION_MICROPHONE=0'
       ]
     end
-    
   end
 end

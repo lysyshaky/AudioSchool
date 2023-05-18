@@ -6,6 +6,6 @@ import '../widget/new_password_widget.dart';
 class ResetCodeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return NewPasswordWidget();
+    return ResetCodeWidget();
   }
 }

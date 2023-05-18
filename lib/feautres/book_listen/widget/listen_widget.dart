@@ -11,6 +11,7 @@ import 'package:audio_session/audio_session.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:just_audio/just_audio.dart';
+import 'package:just_audio_background/just_audio_background.dart';
 import 'dart:ui' as ui;
 
 import 'package:rxdart/rxdart.dart';
@@ -79,8 +80,18 @@ class _PlayScreenState extends State<PlayScreen> with WidgetsBindingObserver {
     // Try to load audio from a source and catch any errors.
     // Inside the _init() method
     try {
-      await _player.setAudioSource(AudioSource.uri(Uri.parse(
-          "https://s3.amazonaws.com/scifri-episodes/scifri20181123-episode.mp3")));
+      await _player.setAudioSource(AudioSource.uri(
+        Uri.parse(
+            "https://s3.amazonaws.com/scifri-episodes/scifri20181123-episode.mp3"),
+        tag: MediaItem(
+          // Specify a unique ID for each media item:
+          id: '1',
+          // Metadata to display in the notification:
+          album: "О.В. Мартинюк",
+          title: "Історія України",
+          artUri: Uri.parse('https://i.ibb.co/4gWtSrt/test.png'),
+        ),
+      ));
     } catch (e) {
       print("Error loading audio source: $e");
     }

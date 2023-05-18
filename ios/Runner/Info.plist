@@ -7,6 +7,10 @@
 		<string>en</string>
 		<string>es</string>
 	</array>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>audio</string>
+	</array>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>... explain why the app uses the microphone here ...</string>
 	<key>NSAppTransportSecurity</key>

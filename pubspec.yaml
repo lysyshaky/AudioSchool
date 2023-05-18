@@ -34,8 +34,9 @@ dependencies:
   just_audio_mpv: ^0.1.6
   just_audio_windows: ^0.2.0
   just_audio: ^0.9.18
+  just_audio_background: ^0.0.1-beta.10
   audio_session: ^0.1.6
-  audio_service: ^0.18.0
+  #audio_service: ^0.18.0
   #api
   chopper: ^6.1.1
   dio: ^5.1.1

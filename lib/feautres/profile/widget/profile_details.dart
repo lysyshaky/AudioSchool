@@ -261,10 +261,11 @@ class _ProfileDetailsState extends State<ProfileDetails> {
                         primaryColor: isThemeDark ? yellowMain : blueMain,
                         accentColor: isThemeDark ? yellowMain : blueMain,
                         colorScheme: ColorScheme.light(
+                          background: Colors.white,
                           primary: isThemeDark ? yellowMain : blueMain,
                           onPrimary: Colors.white,
                           surface: isThemeDark ? yellowMain : blueMain,
-                          onSurface: Colors.black,
+                          onSurface: isThemeDark ? darkBG : Colors.white,
                         ),
                         buttonTheme: ButtonThemeData(
                           textTheme: ButtonTextTheme.primary,
