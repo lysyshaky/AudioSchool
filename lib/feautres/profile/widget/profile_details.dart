@@ -1,7 +1,11 @@
+import 'dart:io';
+
 import 'package:audio_school/api/api.dart';
 import 'package:audio_school/feautres/profile/profile.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
+import 'package:http_parser/http_parser.dart';
 
 import '../../authentication/widget/login_widget.dart';
 import '../../theme/theme_data.dart';
@@ -16,6 +20,8 @@ class ProfileDetails extends StatefulWidget {
 
 class _ProfileDetailsState extends State<ProfileDetails> {
   late Future<Map<String, dynamic>> _userDataFuture;
+  late String avatarUrl = '';
+
   TextEditingController _nameController = TextEditingController(
     text: '${userData!['name']}',
   );
@@ -26,6 +32,92 @@ class _ProfileDetailsState extends State<ProfileDetails> {
   TextEditingController _dateController =
       TextEditingController(text: '${userData!['dateOfBirth']}');
   DateTime? _selectedDate;
+
+  final ImagePicker _picker = ImagePicker();
+
+  Future<void> _pickImage(ImageSource source) async {
+    final pickedFile = await _picker.pickImage(source: source);
+
+    if (pickedFile != null) {
+      setState(() {
+        avatarUrl = pickedFile.path;
+      });
+
+      // Upload the file to your server
+      var uri = Uri.parse(
+          'http://yourserver.com/upload'); // Replace with your server's URL
+      var request = http.MultipartRequest('POST', uri);
+
+      // Create a multipart using the filepath, string basename(Uri path) of path package is used to get the filename
+      var multipartFile = await http.MultipartFile.fromPath(
+          'file', pickedFile.path,
+          contentType: MediaType(
+              'image', 'jpeg')); // Adjust 'image' and 'jpeg' as needed
+      request.files.add(multipartFile);
+
+      var response = await request.send();
+
+      if (response.statusCode == 200) {
+        print('Uploaded!');
+      } else {
+        print('Failed to upload.');
+      }
+    } else {
+      print('No image selected.');
+    }
+  }
+
+  Future<void> _showImageSourceDialog() async {
+    final bool isThemeDark = isDark(context);
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: isDark(context) ? darkBG : lightBG,
+          title: Text(
+            'Завантажити фото',
+            style: TextStyle(
+              color: isThemeDark ? lightBG : blueMainDark,
+            ),
+          ),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                GestureDetector(
+                  child: Text(
+                    "З камери",
+                    style: TextStyle(
+                        color: isThemeDark ? yellowMain : blueMain,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500),
+                  ),
+                  onTap: () {
+                    _pickImage(ImageSource.camera);
+                    Navigator.of(context).pop();
+                  },
+                ),
+                Padding(padding: EdgeInsets.all(8.0)),
+                GestureDetector(
+                  child: Text(
+                    "З галереї",
+                    style: TextStyle(
+                        color: isThemeDark ? yellowMain : blueMain,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500),
+                  ),
+                  onTap: () {
+                    _pickImage(ImageSource.gallery);
+                    Navigator.of(context).pop();
+                  },
+                )
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
   Future<void> _updateUserData(Map<String, dynamic> userData) async {
     final response = await http.put(
       Uri.parse('$API_URL/users/me'),
@@ -69,6 +161,8 @@ class _ProfileDetailsState extends State<ProfileDetails> {
     }
   }
 
+  final defaultImage = 'assets/images/test.png';
+
   Future<Map<String, dynamic>> _fetchUserData(String token) async {
     final response = await http.get(
       Uri.parse('$API_URL/users/me'),
@@ -84,6 +178,9 @@ class _ProfileDetailsState extends State<ProfileDetails> {
         _dateController.text =
             '${_selectedDate!.day}/${_selectedDate!.month}/${_selectedDate!.year}';
       }
+      avatarUrl = (userData['avatar'] ?? defaultImage) as String;
+      //change this for get real image from api
+      // avatarUrl = 'https://i.ibb.co/5GVLX02/test.png';
       return userData;
     } else {
       throw Exception('Failed to load user data');
@@ -151,16 +248,15 @@ class _ProfileDetailsState extends State<ProfileDetails> {
             // Profile picture
             Center(
               child: GestureDetector(
-                onTap: () {
-                  // Handle image picker here
-                },
-                child: CircleAvatar(
-                  radius: 60,
-                  backgroundColor: isThemeDark ? yellowMain : blueMain,
-                  backgroundImage: AssetImage(
-                      'assets/images/test.png'), // Replace with actual image
-                ),
-              ),
+                  onTap: () {
+                    // Handle image picker here
+                  },
+                  child: CircleAvatar(
+                    radius: 80,
+                    backgroundColor: isThemeDark ? yellowMain : blueMain,
+                    backgroundImage:
+                        avatarUrl != null ? FileImage(File(avatarUrl)) : null,
+                  )),
             ),
 
             // Change photo text
@@ -169,15 +265,17 @@ class _ProfileDetailsState extends State<ProfileDetails> {
               child: Center(
                 child: TextButton(
                   onPressed: () {
-                    print(token);
+                    // print(token);
+                    _showImageSourceDialog();
+                    print(avatarUrl);
                     // Handle the button press here
                   },
                   child: Text(
                     'Змінити фото',
                     style: TextStyle(
-                      fontSize: 16,
-                      color: isThemeDark ? yellowMain : blueMain,
-                    ),
+                        fontSize: 18,
+                        color: isThemeDark ? yellowMain : blueMain,
+                        fontWeight: FontWeight.w600),
                   ),
                 ),
               ),

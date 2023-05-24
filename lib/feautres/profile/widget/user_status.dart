@@ -33,6 +33,9 @@ class UserStatus extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var avatarUrl = userData['avatar'];
+    //remove this for use image from api
+    avatarUrl = 'https://i.ibb.co/5GVLX02/test.png';
     final bool isThemeDark = isDark(context);
     return FutureBuilder<Map<String, dynamic>>(
       future: _fetchUserData(authToken),
@@ -47,11 +50,16 @@ class UserStatus extends StatelessWidget {
               children: [
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Icon(
-                    Icons.account_circle,
-                    size: 70,
-                    color: Colors.grey,
-                  ),
+                  child: avatarUrl != null
+                      ? CircleAvatar(
+                          backgroundImage: NetworkImage(avatarUrl as String),
+                          radius: 35,
+                        )
+                      : Icon(
+                          Icons.account_circle,
+                          size: 70,
+                          color: Colors.grey,
+                        ),
                 ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,

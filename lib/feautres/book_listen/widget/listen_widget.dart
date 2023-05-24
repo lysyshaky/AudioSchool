@@ -59,6 +59,7 @@ class _PlayScreenState extends State<PlayScreen> with WidgetsBindingObserver {
 
   @override
   void initState() {
+    _loadData();
     super.initState();
     ambiguate(WidgetsBinding.instance)!.addObserver(this);
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
@@ -131,6 +132,40 @@ class _PlayScreenState extends State<PlayScreen> with WidgetsBindingObserver {
           _player.durationStream,
           (position, bufferedPosition, duration) => PositionData(
               position, bufferedPosition, duration ?? Duration.zero));
+  Future<Map<String, dynamic>> _fetchUserData(String token) async {
+    final response = await http.get(
+      Uri.parse('$API_URL/users/me'),
+      headers: {'Authorization': 'Bearer $token'},
+    );
+
+    if (response.statusCode == 200) {
+      return jsonDecode(response.body) as Map<String, dynamic>;
+    } else {
+      throw Exception('Failed to load user data');
+    }
+  }
+
+  Future<void> _loadData() async {
+    final isLoggedIn = await LoginHelper().getIsUserLoggedIn();
+    if (isLoggedIn) {
+      final token = await LoginHelper().getApiToken();
+      if (token != null) {
+        final fetchedUserData = await _fetchUserData(token);
+        setState(() {
+          userData = fetchedUserData;
+        });
+        // Navigator.push(
+        //   context,
+        //   MaterialPageRoute(
+        //     builder: (context) => NavPage(
+        //       userData: userData!,
+        //       apiToken: token!,
+        //     ),
+        //   ),
+        // );
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -138,41 +173,6 @@ class _PlayScreenState extends State<PlayScreen> with WidgetsBindingObserver {
       setState(() {
         _isTextContainerVisible = !_isTextContainerVisible;
       });
-    }
-
-    Future<Map<String, dynamic>> _fetchUserData(String token) async {
-      final response = await http.get(
-        Uri.parse('$API_URL/users/me'),
-        headers: {'Authorization': 'Bearer $token'},
-      );
-
-      if (response.statusCode == 200) {
-        return jsonDecode(response.body) as Map<String, dynamic>;
-      } else {
-        throw Exception('Failed to load user data');
-      }
-    }
-
-    Future<void> _loadData() async {
-      final isLoggedIn = await LoginHelper().getIsUserLoggedIn();
-      if (isLoggedIn) {
-        final token = await LoginHelper().getApiToken();
-        if (token != null) {
-          final fetchedUserData = await _fetchUserData(token);
-          setState(() {
-            userData = fetchedUserData;
-          });
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => NavPage(
-                userData: userData!,
-                apiToken: token!,
-              ),
-            ),
-          );
-        }
-      }
     }
 
     final bool isThemeDark = isDark(context);
@@ -189,7 +189,15 @@ class _PlayScreenState extends State<PlayScreen> with WidgetsBindingObserver {
           ),
           onPressed: () {
             //make it faster
-            _loadData();
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => NavPage(
+                  userData: userData!,
+                  apiToken: token as String,
+                ),
+              ),
+            );
           },
         ),
         elevation: 0,

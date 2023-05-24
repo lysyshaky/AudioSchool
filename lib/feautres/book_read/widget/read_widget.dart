@@ -42,6 +42,13 @@ class _ReadScreenState extends State<ReadScreen> with WidgetsBindingObserver {
   bool _showMiniPlayer = false;
   IconData _playIcon = Icons.play_arrow_rounded;
 
+  @override
+  void initState() {
+    _loadData();
+    // TODO: implement initState
+    super.initState();
+  }
+
   void _toggleMiniPlayer() {
     setState(() {
       _showMiniPlayer = !_showMiniPlayer;
@@ -89,15 +96,15 @@ class _ReadScreenState extends State<ReadScreen> with WidgetsBindingObserver {
         setState(() {
           userData = fetchedUserData;
         });
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => NavPage(
-              userData: userData!,
-              apiToken: token!,
-            ),
-          ),
-        );
+        // Navigator.push(
+        //   context,
+        //   MaterialPageRoute(
+        //     builder: (context) => NavPage(
+        //       userData: userData!,
+        //       apiToken: token!,
+        //     ),
+        //   ),
+        // );
       }
     }
   }
@@ -118,7 +125,15 @@ class _ReadScreenState extends State<ReadScreen> with WidgetsBindingObserver {
             size: 36,
           ),
           onPressed: () {
-            _loadData();
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => NavPage(
+                  userData: userData!,
+                  apiToken: token as String,
+                ),
+              ),
+            );
           },
         ),
         elevation: 0,

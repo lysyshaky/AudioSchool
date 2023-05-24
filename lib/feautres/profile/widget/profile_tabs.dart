@@ -108,7 +108,10 @@ class _ProfileTabsState extends State<ProfileTabs> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => ProfileDetailsPage(),
+                      builder: (context) => ProfileDetailsPage(
+                        userData: userData,
+                        authToken: token as String,
+                      ),
                     ),
                   );
                 } else if (_tabs[i]['routeName'] == '/support') {

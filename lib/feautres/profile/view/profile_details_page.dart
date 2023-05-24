@@ -9,9 +9,9 @@ import 'package:flutter/material.dart';
 import '../../../api/api.dart';
 
 class ProfileDetailsPage extends StatelessWidget {
-  const ProfileDetailsPage({
-    super.key,
-  });
+  final Map<String, dynamic> userData;
+  final String authToken;
+  ProfileDetailsPage({required this.userData, required this.authToken});
 
   // final Widget accountIcon;
 
@@ -43,7 +43,10 @@ class ProfileDetailsPage extends StatelessWidget {
           style: TextStyle(color: isThemeDark ? lightBG : darkBG),
         ),
       ),
-      body: ProfileDetailsView(),
+      body: ProfileDetailsView(
+        userData: userData,
+        authToken: authToken,
+      ),
     );
   }
 }
