@@ -110,7 +110,7 @@ class _ProfileTabsState extends State<ProfileTabs> {
                     MaterialPageRoute(
                       builder: (context) => ProfileDetailsPage(
                         userData: userData,
-                        authToken: token as String,
+                        token: token as String,
                       ),
                     ),
                   );

@@ -1,17 +1,22 @@
 import 'dart:io';
 
-import 'package:audio_school/api/api.dart';
 import 'package:audio_school/feautres/profile/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:http_parser/http_parser.dart';
 
+import '../../authentication/provider/login_helper.dart';
 import '../../authentication/widget/login_widget.dart';
 import '../../theme/theme_data.dart';
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+
+final API_URL = 'http://localhost:3000/v1';
+Map<String, dynamic> userData = {};
+// String? authToken;
+dynamic? authToken = '';
 
 class ProfileDetails extends StatefulWidget {
   @override
@@ -23,14 +28,15 @@ class _ProfileDetailsState extends State<ProfileDetails> {
   late String avatarUrl = '';
 
   TextEditingController _nameController = TextEditingController(
-    text: '${userData!['name']}',
-  );
+      // text: '${userData!['name']}',
+      );
   TextEditingController _emailController = TextEditingController(
-    text: '${userData!['email']}',
-  );
+      // text: '${userData!['email']}',
+      );
 
-  TextEditingController _dateController =
-      TextEditingController(text: '${userData!['dateOfBirth']}');
+  TextEditingController _dateController = TextEditingController(
+      // text: '${userData!['dateOfBirth']}'
+      );
   DateTime? _selectedDate;
 
   final ImagePicker _picker = ImagePicker();
@@ -124,7 +130,7 @@ class _ProfileDetailsState extends State<ProfileDetails> {
       body: jsonEncode(userData),
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer $token',
+        'Authorization': 'Bearer $authToken',
       },
     );
 
@@ -163,12 +169,36 @@ class _ProfileDetailsState extends State<ProfileDetails> {
 
   final defaultImage = 'assets/images/test.png';
 
-  Future<Map<String, dynamic>> _fetchUserData(String token) async {
+  // Future<Map<String, dynamic>> _fetchUserData(String token) async {
+  //   final response = await http.get(
+  //     Uri.parse('$API_URL/users/me'),
+  //     headers: {'Authorization': 'Bearer $token'},
+  //   );
+
+  //   if (response.statusCode == 200) {
+  //     final userData = jsonDecode(response.body) as Map<String, dynamic>;
+  //     _nameController.text = '${userData['name']}';
+  //     _emailController.text = '${userData['email']}';
+  //     _selectedDate = DateTime.tryParse('${userData['birthday']}' ?? '');
+  //     if (_selectedDate != null) {
+  //       _dateController.text =
+  //           '${_selectedDate!.day}/${_selectedDate!.month}/${_selectedDate!.year}';
+  //     }
+  //     avatarUrl = (userData['avatar'] ?? defaultImage) as String;
+  //     //change this for get real image from api
+  //     // avatarUrl = 'https://i.ibb.co/5GVLX02/test.png';
+  //     return userData;
+  //   } else {
+  //     throw Exception('Failed to load user data');
+  //   }
+  // }
+
+  Future<Map<String, dynamic>> _fetchUserDataInit(String token) async {
     final response = await http.get(
       Uri.parse('$API_URL/users/me'),
       headers: {'Authorization': 'Bearer $token'},
     );
-
+    authToken = token;
     if (response.statusCode == 200) {
       final userData = jsonDecode(response.body) as Map<String, dynamic>;
       _nameController.text = '${userData['name']}';
@@ -183,14 +213,48 @@ class _ProfileDetailsState extends State<ProfileDetails> {
       // avatarUrl = 'https://i.ibb.co/5GVLX02/test.png';
       return userData;
     } else {
-      throw Exception('Failed to load user data');
+      final userData = jsonDecode(response.body) as Map<String, dynamic>;
+      _nameController.text = '${userData['name']}';
+      _emailController.text = '${userData['email']}';
+      _selectedDate = DateTime.tryParse('${userData['birthday']}' ?? '');
+      if (_selectedDate != null) {
+        _dateController.text =
+            '${_selectedDate!.day}/${_selectedDate!.month}/${_selectedDate!.year}';
+      }
+      avatarUrl = (userData['avatar'] ?? defaultImage) as String;
+      //change this for get real image from api
+      // avatarUrl = 'https://i.ibb.co/5GVLX02/test.png';
+      return userData;
+    }
+  }
+
+  Future<void> _loadData() async {
+    final isLoggedIn = await LoginHelper().getIsUserLoggedIn();
+    if (isLoggedIn) {
+      final token = await LoginHelper().getApiToken();
+      if (token != null) {
+        final fetchedUserData = await _fetchUserDataInit(token);
+        setState(() {
+          userData = fetchedUserData;
+        });
+        // Navigator.push(
+        //   context,
+        //   MaterialPageRoute(
+        //     builder: (context) => NavPage(
+        //       userData: userData!,
+        //       apiToken: token!,
+        //     ),
+        //   ),
+        // );
+      }
     }
   }
 
   @override
   void initState() {
+    _loadData();
     super.initState();
-    _userDataFuture = _fetchUserData(token as String);
+    _userDataFuture = _fetchUserDataInit(authToken as String);
     _nameController = TextEditingController();
     _emailController = TextEditingController();
     _dateController = TextEditingController();
@@ -210,7 +274,7 @@ class _ProfileDetailsState extends State<ProfileDetails> {
     // Fetch the user data here using the authToken
     // and update your controllers with the new data
 
-    await _fetchUserData(token as String).then((userData) {
+    await _fetchUserDataInit(authToken as String).then((userData) {
       setState(() {
         _nameController.text = '${userData!['name']}';
         _emailController.text = '${userData!['email']}';
@@ -265,7 +329,7 @@ class _ProfileDetailsState extends State<ProfileDetails> {
               child: Center(
                 child: TextButton(
                   onPressed: () {
-                    // print(token);
+                    print(authToken);
                     _showImageSourceDialog();
                     print(avatarUrl);
                     // Handle the button press here
@@ -429,7 +493,7 @@ class _ProfileDetailsState extends State<ProfileDetails> {
                     // _fetchUserData(token);
                     // Update the user data
                     await _updateUserData(updatedUserData);
-                    await _fetchUserData(token as String);
+                    await _fetchUserDataInit(authToken as String);
                     // Create the SnackBar with the appropriate colors
                     // Add the SnackBar to display the message
 

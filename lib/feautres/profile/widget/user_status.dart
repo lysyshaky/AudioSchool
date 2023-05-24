@@ -4,10 +4,11 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 import '../../../api/api.dart';
+import '../../authentication/provider/login_helper.dart';
 import '../../authentication/widget/login_widget.dart' as ll;
 import '../../theme/theme_data.dart';
 
-class UserStatus extends StatelessWidget {
+class UserStatus extends StatefulWidget {
   final String authToken;
   final bool isPremium;
 
@@ -18,10 +19,80 @@ class UserStatus extends StatelessWidget {
     required Map<String, dynamic> userData,
   }) : super(key: key);
 
+  @override
+  State<UserStatus> createState() => _UserStatusState();
+}
+
+class _UserStatusState extends State<UserStatus> with WidgetsBindingObserver {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+    _loadData();
+    _fetchUserData(widget.authToken);
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    _fetchUserData(widget.authToken);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    _fetchUserData(widget.authToken);
+    if (state == AppLifecycleState.resumed) {
+      // user returned to our app
+      _loadData();
+    } else if (state == AppLifecycleState.inactive) {
+      // app is inactive
+    } else if (state == AppLifecycleState.paused) {
+      // user is about quit our app temporally
+    } else if (state == AppLifecycleState.detached) {
+      // app suspended (not used in iOS)
+    }
+  }
+
   Future<Map<String, dynamic>> _fetchUserData(String token) async {
     final response = await http.get(
       Uri.parse('$API_URL/users/me'),
-      headers: {'Authorization': 'Bearer $authToken'},
+      headers: {'Authorization': 'Bearer $token'},
+    );
+
+    if (response.statusCode == 200) {
+      return jsonDecode(response.body) as Map<String, dynamic>;
+    } else {
+      throw Exception('Failed to load user data');
+    }
+  }
+
+  Future<void> _loadData() async {
+    final isLoggedIn = await LoginHelper().getIsUserLoggedIn();
+    if (isLoggedIn) {
+      final token = await LoginHelper().getApiToken();
+      if (token != null) {
+        final fetchedUserData = await _fetchUserDataInit(token);
+        setState(() {
+          userData = fetchedUserData;
+        });
+        // Navigator.push(
+        //   context,
+        //   MaterialPageRoute(
+        //     builder: (context) => NavPage(
+        //       userData: userData!,
+        //       apiToken: token!,
+        //     ),
+        //   ),
+        // );
+      }
+    }
+  }
+
+  Future<Map<String, dynamic>> _fetchUserDataInit(String token) async {
+    final response = await http.get(
+      Uri.parse('$API_URL/users/me'),
+      headers: {'Authorization': 'Bearer ${widget.authToken}'},
     );
 
     if (response.statusCode == 200 || response.statusCode == 201) {
@@ -38,7 +109,7 @@ class UserStatus extends StatelessWidget {
     avatarUrl = 'https://i.ibb.co/5GVLX02/test.png';
     final bool isThemeDark = isDark(context);
     return FutureBuilder<Map<String, dynamic>>(
-      future: _fetchUserData(authToken),
+      future: _fetchUserData(widget.authToken),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           if (snapshot.hasError) {
@@ -90,12 +161,12 @@ class UserStatus extends StatelessWidget {
                     border: Border.all(color: greyNavLight, width: 1),
                   ),
                   child: Text(
-                    isPremium ? 'Premium' : 'Default',
+                    widget.isPremium ? 'Premium' : 'Default',
                     style: TextStyle(
                       fontSize: 14,
-                      color: isPremium && isThemeDark
+                      color: widget.isPremium && isThemeDark
                           ? yellowMain
-                          : !isThemeDark && isPremium
+                          : !isThemeDark && widget.isPremium
                               ? blueMain
                               : greyNavLight,
                     ),

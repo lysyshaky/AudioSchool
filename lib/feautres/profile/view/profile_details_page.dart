@@ -1,4 +1,3 @@
-import 'package:audio_school/feautres/authentication/widget/login_widget.dart';
 import 'package:audio_school/feautres/navigation/nav.dart';
 import 'package:audio_school/feautres/profile/profile.dart';
 import 'package:audio_school/feautres/profile/view/profile_details_view.dart';
@@ -6,12 +5,12 @@ import 'package:audio_school/feautres/theme/theme_data.dart';
 
 import 'package:flutter/material.dart';
 
-import '../../../api/api.dart';
+import '../widget/profile_details.dart';
 
 class ProfileDetailsPage extends StatelessWidget {
   final Map<String, dynamic> userData;
-  final String authToken;
-  ProfileDetailsPage({required this.userData, required this.authToken});
+  final String token;
+  ProfileDetailsPage({required this.userData, required this.token});
 
   // final Widget accountIcon;
 
@@ -30,7 +29,7 @@ class ProfileDetailsPage extends StatelessWidget {
             Navigator.of(context).push(MaterialPageRoute(
                 builder: (context) => NavPage(
                       userData: userData,
-                      apiToken: token as String,
+                      apiToken: authToken as String,
                     )));
           },
         ),
@@ -45,7 +44,7 @@ class ProfileDetailsPage extends StatelessWidget {
       ),
       body: ProfileDetailsView(
         userData: userData,
-        authToken: authToken,
+        authToken: authToken as String,
       ),
     );
   }
