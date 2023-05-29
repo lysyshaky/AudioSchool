@@ -34,9 +34,8 @@ class _ProfileDetailsState extends State<ProfileDetails> {
       // text: '${userData!['email']}',
       );
 
-  TextEditingController _dateController = TextEditingController(
-      // text: '${userData!['dateOfBirth']}'
-      );
+  TextEditingController _dateController =
+      TextEditingController(text: '${userData!['dateOfBirth']}');
   DateTime? _selectedDate;
 
   final ImagePicker _picker = ImagePicker();
@@ -201,8 +200,8 @@ class _ProfileDetailsState extends State<ProfileDetails> {
     authToken = token;
     if (response.statusCode == 200) {
       final userData = jsonDecode(response.body) as Map<String, dynamic>;
-      _nameController.text = '${userData['name']}';
-      _emailController.text = '${userData['email']}';
+      _nameController.text = '${userData['name']}' ?? '';
+      _emailController.text = '${userData['email']}' ?? '';
       _selectedDate = DateTime.tryParse('${userData['birthday']}' ?? '');
       if (_selectedDate != null) {
         _dateController.text =
@@ -214,8 +213,8 @@ class _ProfileDetailsState extends State<ProfileDetails> {
       return userData;
     } else {
       final userData = jsonDecode(response.body) as Map<String, dynamic>;
-      _nameController.text = '${userData['name']}';
-      _emailController.text = '${userData['email']}';
+      _nameController.text = '${userData['name']}' ?? "";
+      _emailController.text = '${userData['email']}' ?? "";
       _selectedDate = DateTime.tryParse('${userData['birthday']}' ?? '');
       if (_selectedDate != null) {
         _dateController.text =
@@ -293,238 +292,249 @@ class _ProfileDetailsState extends State<ProfileDetails> {
   @override
   Widget build(BuildContext context) {
     final bool isThemeDark = isDark(context);
-    return SafeArea(
-      child: Padding(
-        padding: EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // App bar
-            Text(
-              'Деталі профілю',
-              style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                  color: isThemeDark ? lightBG : blueMainDark),
-            ),
-            SizedBox(height: 24),
+    return GestureDetector(
+      onTap: () {
+        FocusScopeNode currentFocus = FocusScope.of(context);
+        if (!currentFocus.hasPrimaryFocus) {
+          currentFocus.unfocus();
+        }
+      },
+      child: SafeArea(
+        child: Padding(
+          padding: EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // App bar
+              Text(
+                'Деталі профілю',
+                style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    color: isThemeDark ? lightBG : blueMainDark),
+              ),
+              SizedBox(height: 24),
 
-            // Profile picture
-            Center(
-              child: GestureDetector(
-                  onTap: () {
-                    // Handle image picker here
-                  },
-                  child: CircleAvatar(
-                    radius: 80,
-                    backgroundColor: isThemeDark ? yellowMain : blueMain,
-                    backgroundImage:
-                        avatarUrl != null ? FileImage(File(avatarUrl)) : null,
-                  )),
-            ),
+              // Profile picture
+              Center(
+                child: GestureDetector(
+                    onTap: () {
+                      // Handle image picker here
+                    },
+                    child: CircleAvatar(
+                      radius: 80,
+                      backgroundColor: isThemeDark ? yellowMain : blueMain,
+                      backgroundImage:
+                          avatarUrl != null ? FileImage(File(avatarUrl)) : null,
+                    )),
+              ),
 
-            // Change photo text
-            Padding(
-              padding: EdgeInsets.symmetric(vertical: 6),
-              child: Center(
-                child: TextButton(
-                  onPressed: () {
-                    print(authToken);
-                    _showImageSourceDialog();
-                    print(avatarUrl);
-                    // Handle the button press here
-                  },
-                  child: Text(
-                    'Змінити фото',
-                    style: TextStyle(
-                        fontSize: 18,
-                        color: isThemeDark ? yellowMain : blueMain,
-                        fontWeight: FontWeight.w600),
+              // Change photo text
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 6),
+                child: Center(
+                  child: TextButton(
+                    onPressed: () {
+                      print(authToken);
+                      _showImageSourceDialog();
+                      print(avatarUrl);
+                      // Handle the button press here
+                    },
+                    child: Text(
+                      'Змінити фото',
+                      style: TextStyle(
+                          fontSize: 18,
+                          color: isThemeDark ? yellowMain : blueMain,
+                          fontWeight: FontWeight.w600),
+                    ),
                   ),
                 ),
               ),
-            ),
 
-            // Divider
-            Divider(
-              height: 1,
-              thickness: 1,
-              color: isThemeDark ? greyMain : greyNavDark,
-            ),
+              // Divider
+              Divider(
+                height: 1,
+                thickness: 1,
+                color: isThemeDark ? greyMain : greyNavDark,
+              ),
 
-            // Text fields
-            SizedBox(height: 24),
-            TextField(
-              style: TextStyle(color: isThemeDark ? lightBG : blueMainDark),
-              cursorColor: isThemeDark ? yellowMain : blueMain,
-              controller: _nameController,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8),
-                  borderSide:
-                      BorderSide(color: isThemeDark ? yellowMain : blueMain),
+              // Text fields
+              SizedBox(height: 24),
+              TextField(
+                style: TextStyle(color: isThemeDark ? lightBG : blueMainDark),
+                cursorColor: isThemeDark ? yellowMain : blueMain,
+                controller: _nameController,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
+                    borderSide:
+                        BorderSide(color: isThemeDark ? yellowMain : blueMain),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide:
+                        BorderSide(color: isThemeDark ? darkBG : lightBG),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide:
+                        BorderSide(color: isThemeDark ? yellowMain : blueMain),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  labelText: 'ПІБ',
+                  labelStyle: TextStyle(
+                      color: isThemeDark ? yellowMain : blueMain,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold),
+                  filled: false,
                 ),
-                enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: isThemeDark ? darkBG : lightBG),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderSide:
-                      BorderSide(color: isThemeDark ? yellowMain : blueMain),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                labelText: 'ПІБ',
-                labelStyle: TextStyle(
-                    color: isThemeDark ? yellowMain : blueMain,
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold),
-                filled: false,
               ),
-            ),
-            SizedBox(height: 24),
-            TextField(
-              style: TextStyle(color: isThemeDark ? lightBG : blueMainDark),
-              cursorColor: isThemeDark ? yellowMain : blueMain,
-              controller: _emailController,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8),
-                  borderSide:
-                      BorderSide(color: isThemeDark ? yellowMain : blueMain),
+              SizedBox(height: 24),
+              TextField(
+                style: TextStyle(color: isThemeDark ? lightBG : blueMainDark),
+                cursorColor: isThemeDark ? yellowMain : blueMain,
+                controller: _emailController,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
+                    borderSide:
+                        BorderSide(color: isThemeDark ? yellowMain : blueMain),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide:
+                        BorderSide(color: isThemeDark ? darkBG : lightBG),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide:
+                        BorderSide(color: isThemeDark ? yellowMain : blueMain),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  labelText: 'Е-мейл',
+                  labelStyle: TextStyle(
+                      color: isThemeDark ? yellowMain : blueMain,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold),
+                  filled: false,
                 ),
-                enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: isThemeDark ? darkBG : lightBG),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderSide:
-                      BorderSide(color: isThemeDark ? yellowMain : blueMain),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                labelText: 'Е-мейл',
-                labelStyle: TextStyle(
-                    color: isThemeDark ? yellowMain : blueMain,
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold),
-                filled: false,
               ),
-            ),
-            SizedBox(height: 24),
-            GestureDetector(
-              onTap: () async {
-                DateTime? pickedDate = await showDatePicker(
-                  context: context,
-                  initialDate: _selectedDate ?? DateTime.now(),
-                  firstDate: DateTime(1900),
-                  lastDate: DateTime.now(),
-                  builder: (BuildContext context, Widget? child) {
-                    return Theme(
-                      data: Theme.of(context).copyWith(
-                        primaryColor: isThemeDark ? yellowMain : blueMain,
-                        accentColor: isThemeDark ? yellowMain : blueMain,
-                        colorScheme: ColorScheme.light(
-                          background: Colors.white,
-                          primary: isThemeDark ? yellowMain : blueMain,
-                          onPrimary: Colors.white,
-                          surface: isThemeDark ? yellowMain : blueMain,
-                          onSurface: isThemeDark ? darkBG : Colors.white,
+              SizedBox(height: 24),
+              GestureDetector(
+                onTap: () async {
+                  DateTime? pickedDate = await showDatePicker(
+                    context: context,
+                    initialDate: _selectedDate ?? DateTime.now(),
+                    firstDate: DateTime(1900),
+                    lastDate: DateTime.now(),
+                    builder: (BuildContext context, Widget? child) {
+                      return Theme(
+                        data: Theme.of(context).copyWith(
+                          primaryColor: isThemeDark ? yellowMain : blueMain,
+                          accentColor: isThemeDark ? yellowMain : blueMain,
+                          colorScheme: ColorScheme.light(
+                            background: Colors.white,
+                            primary: isThemeDark ? yellowMain : blueMain,
+                            onPrimary: Colors.white,
+                            surface: isThemeDark ? yellowMain : blueMain,
+                            onSurface: isThemeDark ? darkBG : Colors.white,
+                          ),
+                          buttonTheme: ButtonThemeData(
+                            textTheme: ButtonTextTheme.primary,
+                          ),
                         ),
-                        buttonTheme: ButtonThemeData(
-                          textTheme: ButtonTextTheme.primary,
-                        ),
+                        child: child!,
+                      );
+                    },
+                  );
+                  if (pickedDate != null) {
+                    setState(() {
+                      _selectedDate = pickedDate;
+                      _dateController.text =
+                          '${_selectedDate!.day}/${_selectedDate!.month}/${_selectedDate!.year}';
+                    });
+                  }
+                },
+                child: AbsorbPointer(
+                  child: TextField(
+                    style:
+                        TextStyle(color: isThemeDark ? lightBG : blueMainDark),
+                    controller: _dateController,
+                    readOnly: true,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide(
+                            color: isThemeDark ? yellowMain : blueMain),
+                        borderRadius: BorderRadius.circular(8),
                       ),
-                      child: child!,
-                    );
-                  },
-                );
-                if (pickedDate != null) {
-                  setState(() {
-                    _selectedDate = pickedDate;
-                    _dateController.text =
-                        '${_selectedDate!.day}/${_selectedDate!.month}/${_selectedDate!.year}';
-                  });
-                }
-              },
-              child: AbsorbPointer(
-                child: TextField(
-                  style: TextStyle(color: isThemeDark ? lightBG : blueMainDark),
-                  controller: _dateController,
-                  readOnly: true,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                      borderSide: BorderSide(
-                          color: isThemeDark ? yellowMain : blueMain),
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide:
-                          BorderSide(color: isThemeDark ? darkBG : lightBG),
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                          color: isThemeDark ? yellowMain : blueMain),
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    labelText: 'Дата народження',
-                    hintText: 'Оберіть дату',
-                    labelStyle: TextStyle(
-                        color: isThemeDark ? yellowMain : blueMain,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold),
-                  ),
-                ),
-              ),
-            ),
-
-            SizedBox(height: 48),
-            Center(
-              child: SizedBox(
-                width: 358,
-                height: 48,
-                child: ElevatedButton(
-                  onPressed: () async {
-                    Map<String, dynamic> updatedUserData = {
-                      'name': _nameController.text,
-                      'email': _emailController.text,
-                      'birthday': _selectedDate?.toIso8601String(),
-                    };
-
-                    // _fetchUserData(token);
-                    // Update the user data
-                    await _updateUserData(updatedUserData);
-                    await _fetchUserDataInit(authToken as String);
-                    // Create the SnackBar with the appropriate colors
-                    // Add the SnackBar to display the message
-
-                    // Show the SnackBar using the ScaffoldMessenger
-
-                    // Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute(
-                    //     builder: (context) => const ProfilePage(),
-                    //   ),
-                    // );
-                  },
-                  child: Text(
-                    'Зберегти дані',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      color: isThemeDark ? darkBG : lightBG,
-                    ),
-                  ),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: isThemeDark ? yellowMain : blueMain,
-                    minimumSize: Size(326, 48),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide:
+                            BorderSide(color: isThemeDark ? darkBG : lightBG),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                            color: isThemeDark ? yellowMain : blueMain),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      labelText: 'Дата народження',
+                      hintText: 'Оберіть дату',
+                      labelStyle: TextStyle(
+                          color: isThemeDark ? yellowMain : blueMain,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold),
                     ),
                   ),
                 ),
               ),
-            ),
-          ],
+
+              SizedBox(height: 48),
+              Center(
+                child: SizedBox(
+                  width: 358,
+                  height: 48,
+                  child: ElevatedButton(
+                    onPressed: () async {
+                      Map<String, dynamic> updatedUserData = {
+                        'name': _nameController.text ?? '',
+                        'email': _emailController.text ?? '',
+                        'birthday': _selectedDate?.toIso8601String(),
+                      };
+
+                      // _fetchUserData(token);
+                      // Update the user data
+                      await _updateUserData(updatedUserData);
+                      await _fetchUserDataInit(authToken as String);
+                      // Create the SnackBar with the appropriate colors
+                      // Add the SnackBar to display the message
+
+                      // Show the SnackBar using the ScaffoldMessenger
+
+                      // Navigator.push(
+                      //   context,
+                      //   MaterialPageRoute(
+                      //     builder: (context) => const ProfilePage(),
+                      //   ),
+                      // );
+                    },
+                    child: Text(
+                      'Зберегти дані',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: isThemeDark ? darkBG : lightBG,
+                      ),
+                    ),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: isThemeDark ? yellowMain : blueMain,
+                      minimumSize: Size(326, 48),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

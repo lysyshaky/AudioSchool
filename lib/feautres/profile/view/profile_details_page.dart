@@ -42,9 +42,17 @@ class ProfileDetailsPage extends StatelessWidget {
           style: TextStyle(color: isThemeDark ? lightBG : darkBG),
         ),
       ),
-      body: ProfileDetailsView(
-        userData: userData,
-        authToken: authToken as String,
+      body: GestureDetector(
+        onTap: () {
+          FocusScopeNode currentFocus = FocusScope.of(context);
+          if (!currentFocus.hasPrimaryFocus) {
+            currentFocus.unfocus();
+          }
+        },
+        child: ProfileDetailsView(
+          userData: userData,
+          authToken: authToken as String,
+        ),
       ),
     );
   }
