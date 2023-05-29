@@ -1,3 +1,4 @@
+import 'package:audio_school/feautres/profile/widget/empty_tabs.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -84,6 +85,12 @@ class _ProfileTabsState extends State<ProfileTabs> {
     Provider.of<ThemeNotifier>(context, listen: false).setTheme(value);
   }
 
+  void _toggleThemes(BuildContext context) {
+    Provider.of<ThemeModel>(context, listen: false).toggleTheme();
+  }
+
+// Inside onPressed function:
+
   @override
   Widget build(BuildContext context) {
     bool isThemeDark = isDark(context);
@@ -115,9 +122,53 @@ class _ProfileTabsState extends State<ProfileTabs> {
                     ),
                   );
                 } else if (_tabs[i]['routeName'] == '/support') {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => EmptyTabs(
+                        tabName: Text('Підтримка',
+                            style: TextStyle(
+                                fontSize: 24.0,
+                                color: isThemeDark ? lightBG : blueMainDark)),
+                      ),
+                    ),
+                  );
                 } else if (_tabs[i]['routeName'] == '/payment') {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => EmptyTabs(
+                        tabName: Text('Оплата',
+                            style: TextStyle(
+                                fontSize: 24.0,
+                                color: isThemeDark ? lightBG : blueMainDark)),
+                      ),
+                    ),
+                  );
                 } else if (_tabs[i]['routeName'] == '/team') {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => EmptyTabs(
+                        tabName: Text('Команда',
+                            style: TextStyle(
+                                fontSize: 24.0,
+                                color: isThemeDark ? lightBG : blueMainDark)),
+                      ),
+                    ),
+                  );
                 } else if (_tabs[i]['routeName'] == '/subscription') {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => EmptyTabs(
+                        tabName: Text('Підписка',
+                            style: TextStyle(
+                                fontSize: 24.0,
+                                color: isThemeDark ? lightBG : blueMainDark)),
+                      ),
+                    ),
+                  );
                 } else {
                   _switchValue = !_switchValue;
                   if (_switchValue) {

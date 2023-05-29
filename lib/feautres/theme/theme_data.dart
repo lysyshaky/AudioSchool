@@ -64,3 +64,14 @@ class ThemeNotifier extends ChangeNotifier {
     _pref!.setBool(key, _isDarkTheme);
   }
 }
+
+class ThemeModel extends ChangeNotifier {
+  bool _isDarkTheme = false;
+
+  bool get isDarkTheme => _isDarkTheme;
+
+  void toggleTheme() {
+    _isDarkTheme = !_isDarkTheme;
+    notifyListeners();
+  }
+}

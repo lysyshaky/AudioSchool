@@ -189,6 +189,7 @@ class _PlayScreenState extends State<PlayScreen> with WidgetsBindingObserver {
           ),
           onPressed: () {
             //make it faster
+            _player.stop();
             Navigator.push(
               context,
               MaterialPageRoute(
@@ -222,6 +223,7 @@ class _PlayScreenState extends State<PlayScreen> with WidgetsBindingObserver {
                 color: isThemeDark ? lightBG : blueMainDark),
             onPressed: () {
               // With this line
+              _player.stop();
               Navigator.push(
                   context,
                   MaterialPageRoute(
