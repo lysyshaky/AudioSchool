@@ -225,7 +225,7 @@ class _RegisterWidgetState extends State<RegisterWidget> {
                             SizedBox(height: 16),
                             Theme(
                               data: Theme.of(context)
-                                  .copyWith(accentColor: yellowMain),
+                                  .copyWith(primaryColor: yellowMain),
                               child: TextFormField(
                                 controller: _passwordController,
                                 cursorColor:

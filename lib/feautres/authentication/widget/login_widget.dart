@@ -179,7 +179,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                             SizedBox(height: 16),
                             Theme(
                               data: Theme.of(context)
-                                  .copyWith(accentColor: yellowMain),
+                                  .copyWith(primaryColor: yellowMain),
                               child: TextFormField(
                                 controller: passwordController,
                                 cursorColor:

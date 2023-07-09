@@ -429,7 +429,7 @@ class _ProfileDetailsState extends State<ProfileDetails> {
                       return Theme(
                         data: Theme.of(context).copyWith(
                           primaryColor: isThemeDark ? yellowMain : blueMain,
-                          accentColor: isThemeDark ? yellowMain : blueMain,
+                          // pri: isThemeDark ? yellowMain : blueMain,
                           colorScheme: ColorScheme.light(
                             background: Colors.white,
                             primary: isThemeDark ? yellowMain : blueMain,

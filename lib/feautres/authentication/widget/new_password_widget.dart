@@ -89,7 +89,7 @@ class _NewPasswordWidgetState extends State<NewPasswordWidget> {
                           SizedBox(height: 16),
                           Theme(
                             data: Theme.of(context)
-                                .copyWith(accentColor: yellowMain),
+                                .copyWith(primaryColor: yellowMain),
                             child: TextFormField(
                               cursorColor: isThemeDark ? yellowMain : blueMain,
                               obscureText: _obscureText,
@@ -135,7 +135,7 @@ class _NewPasswordWidgetState extends State<NewPasswordWidget> {
                           SizedBox(height: 16),
                           Theme(
                             data: Theme.of(context)
-                                .copyWith(accentColor: yellowMain),
+                                .copyWith(primaryColor: yellowMain),
                             child: TextFormField(
                               cursorColor: isThemeDark ? yellowMain : blueMain,
                               obscureText: _obscureText,

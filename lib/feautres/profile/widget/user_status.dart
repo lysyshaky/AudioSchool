@@ -161,7 +161,7 @@ class _UserStatusState extends State<UserStatus> with WidgetsBindingObserver {
                     border: Border.all(color: greyNavLight, width: 1),
                   ),
                   child: Text(
-                    widget.isPremium ? 'Premium' : 'Default',
+                    widget.isPremium ? 'Преміум' : 'Звичайний',
                     style: TextStyle(
                       fontSize: 14,
                       color: widget.isPremium && isThemeDark

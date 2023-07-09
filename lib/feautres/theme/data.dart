@@ -5,7 +5,7 @@ ThemeData lightTheme = ThemeData(
   brightness: Brightness.light,
   backgroundColor: lightBG,
   primaryColor: blueMain,
-  accentColor: blueMain,
+  // accentColor: blueMain,
   primaryTextTheme: const TextTheme(
     titleLarge: TextStyle(color: blueMainDark),
   ),
@@ -16,7 +16,8 @@ ThemeData darkTheme = ThemeData(
   brightness: Brightness.dark,
   backgroundColor: darkBG,
   primaryColor: yellowMain,
-  accentColor: yellowMain,
+
+  // accentColor: yellowMain,
 
   // other color customization
 );
